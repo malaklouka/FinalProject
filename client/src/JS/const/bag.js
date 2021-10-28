@@ -1,0 +1,17 @@
+export const LOAD_BAGS="LOAD_BAGS"
+export const GET_BAGS_SUCCESS="GET_BAGS_SUCCESS"
+export const GET_BAGS_FAIL="GET_BAGS_FAIL"
+export const DELETE_BAG="DELETE_BAG"
+export const EDIT_BAG="EDIT_BAG"
+export const BAG_UPDATED="BAG_UPDATED"
+export const IS_RESERVED="IS_RESERVED"
+export const CREATE="CREATE"
+export const LIKE="LIKE"
+export const LIKE_BAG="LIKE_BAG"
+export const LIKE_BAG_SUCCESS="LIKE_BAG_SUCCESS"
+export const LIKE_BAG_FAIL="LIKE_BAG_FAIL"
+
+export const IS_ADDED="IS_ADDED"
+export const FETCH_BAGS = "FETCH_BAGS"
+export const FILTER_BAGS_BY_ADRESSE = "FILTER_BAGS_BY_ADRESSE"
+

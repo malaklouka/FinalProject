@@ -1,0 +1,180 @@
+body{
+    background: #070707;
+}
+  .detcontainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 320px;
+    height: 400px;
+    margin: 40px 30px;
+    transition: 0.5s;
+
+  }
+  .detcontainer::before,
+  .detcontainer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50px;
+    width: 50%;
+    height: 100%;
+    background: #fff;
+    border-radius: 8px;
+    transform: skewX(15deg);
+    transition: 0.5s;
+    background: linear-gradient(315deg, #FF69B4, #f8f7f7);
+  }
+  .detcontainer::after {
+    filter: blur(30px);
+  }
+  .detcontainer:hover:before,
+  .detcontainer:hover::after {
+    transform: skewX(0deg);
+    left: 20px;
+    width: calc(100% - 90px);
+  }
+  .detcontainer span {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .detcontainer span::before,
+  .detcontainer span::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    animation: animate 2s ease-in-out infinite;
+    transition: 0.5s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+  .detcontainer span::before {
+    top: 0;
+    left: 0;
+  }
+  .detcontainer span::after {
+    bottom: 0;
+    right: 0;
+    animation-delay: 1s;
+  }
+  .detcontainer:hover span::before,
+  .detcontainer:hover span::after {
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+  }
+  .detcontainer:hover span::before {
+    top: -50px;
+    left: 50px;
+  }
+  .detcontainer:hover span::after {
+    bottom: -50px;
+    right: 50px;
+  }
+  @keyframes animate {
+    0%,
+    100% {
+      transform: translateY(10px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  .detcontainer .detcontent {
+    position: relative;
+    left: 0;
+    padding: 20px 40px;
+    background: rgba(0, 0, 0, 0.05);
+    z-index: 1;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    transition: 0.5s;
+    border: 0.5px solid rgba(255, 255, 255, 0.07);
+    color: #fff;
+  }
+  .detcontainer:hover .detcontent {
+    left: -25px;
+    padding: 60px 40px;
+  }
+  .detcontainer .detcontent h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  .detcontainer .detcontent p {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    line-height: 1.4em;
+    color: black;
+  }
+  .detcontainer .detcontent a {
+    font-size: 1.1em;
+    color: #000;
+    display: inline-block;
+    padding: 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 5px;
+  }
+  
+
+
+  .back-button {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    border: #edeff0 1px solid;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+  .back-button.back .arrow-wrap {
+    left: -50%;
+  }
+  .back-button:hover {
+    background: #f45b03;
+  }
+  .back-button:hover .arrow-wrap span {
+    background: #fff;
+  }
+  .back-button .arrow-wrap {
+    display: block;
+    position: absolute;
+    height: 70%;
+    width: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: left 0.3s ease;
+  }
+  .back-button .arrow-wrap span {
+    height: 1px;
+    left: 0;
+    top: 50%;
+    background: #f5f7f8;
+    position: absolute;
+    display: block;
+    transition: background 0.3s ease;
+  }
+  .back-button .arrow-wrap .arrow-part-1 {
+    width: 100%;
+    transform: translate(0, -50%);
+  }
+  .back-button .arrow-wrap .arrow-part-2 {
+    width: 60%;
+    transform: rotate(-45deg);
+    transform-origin: 0 0;
+  }
+  .back-button .arrow-wrap .arrow-part-3 {
+    width: 60%;
+    transform: rotate(45deg);
+    transform-origin: 0 0;
+  }
+  
