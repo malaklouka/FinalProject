@@ -4,6 +4,28 @@ from "../const/demandeConst"
 import axios from "axios"
 
 
+
+
+
+export const addnewd=(newD)=>async (dispatch)=>{
+  dispatch({ type: LOAD_DMND })
+  
+  try {
+    const config = {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    const response = await axios.post('/dmnd/test/add',newD,config)
+    console.log(response.data)
+    dispatch({ type: ADD_TO_DMND_SUCCESS, payload: response.data.demand})
+    console.log(response.data)
+
+  } catch (error) {
+    console.dir(error)
+    dispatch({ type: ADD_TO_DMND_FAIL, payload: error })
+  }
+}
 export const addtod=(newDemand)=>async (dispatch)=>{
   dispatch({ type: LOAD_DMND })
   
@@ -41,21 +63,43 @@ export const addDmnd=(newDemand)=>async (dispatch)=>{
 
     } catch (error) {
       console.log(error)
+    
+    
       dispatch({ type: ADD_TO_DMND_FAIL, payload: error })
     }
 }
-//get my orders : cust check his orders (he can cancel it)
+//get all demandes : storek can accept or refuse demand
 export const getdemandes=()=>async (dispatch)=>{
     dispatch({type: LOAD_DMND})
     try {
-        const response = await axios.get("/dmnd/alldemande")
+        const response = await axios.get("/dmnd/d")
         console.log(response)
-        dispatch({type: GET_CUST_DMND_SUCCESS, payload:response.data.alldemande})
+        dispatch({type: GET_CUST_DMND_SUCCESS, payload:response.data.demds})
     } catch (error) {
       console.log(error)
         dispatch({type: GET_CUST_DMND_FAIL, payload:error})
         
     }
+
+}
+
+export const getmyD=(id)=>async (dispatch)=>{
+  dispatch({type: LOAD_DMND})
+
+  try {
+    const config = {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    };
+      const response = await axios.get(`/dmnd/dm/${id}`,config)
+      console.log(response)
+      dispatch({type: GET_CUST_DMND_SUCCESS, payload:response.data})
+  } catch (error) {
+    console.log(error)
+      dispatch({type: GET_CUST_DMND_FAIL, payload:error})
+      
+  }
 
 }
 //get accepted demandes
@@ -114,7 +158,7 @@ export const acceptDemande=(id)=>async(dispatch)=>{
   };
   try {
     await axios.put(`/dmnd/accept/${id}`,{},config)
-    dispatch(getdemandes())
+  dispatch(getdemandes())
   } catch (error) {
     dispatch({type:GET_CUST_DMND_FAIL})
   }
@@ -131,9 +175,9 @@ export const deleteDemande = (id) => async (dispatch) => {
   },
 };
     try {
-      const response= await axios.delete(`/dmnd/cancel/${id}`)
+      const response= await axios.delete(`/dmnd/cancel/${id}`,config)
 console.log(response)
-      dispatch(getdemandes());
+  dispatch(getdemandes());
     } catch (error) {
       dispatch({ type: GET_CUST_DMND_FAIL, payload: error.response.data.errors });
     }

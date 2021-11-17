@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Form, Input, TextArea, Button, Select } from "semantic-ui-react";
+import { Form, Input, TextArea, Button } from "semantic-ui-react";
 import { addBag } from "../../JS/actions/bag";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -11,12 +11,60 @@ import { Calendar } from 'react-date-range';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+
+
+
+
+
 
 import "./addbag.css"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const adresses = [
+ "Ariana",
+  "Béja",
+ "Ben Arous", 
+ "Bizerte", 
+ "Gabès" ,
+ "Jendouba", 
+"Kairouan" ,
+"Kasserine" ,
+ "Kébili" ,
+  "Le Kef" ,
+  "Mahdia","La Manouba"
+ ,"Médenine","Monastir" ,"Nabeul" ,"Sfax","Sidi Bouzid" ,"Siliana" ,"Sousse" ,"Tataouine",
+"Tozeur" ,"Tunis","Zaghouan"
+];
+
+function getStyles(adresse, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(adresse) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 
 //add new bag
@@ -25,12 +73,15 @@ const Add = () => {
     const history=useHistory()
     const formData= new FormData();
 
-    const [state, setState] = useState({namebag:"", adresse:"", price:"",priceBefore:"", expirationDate:"",availibiltyDate:"",description:""})
+    const [state, setState] = useState({namebag:"",  price:"",priceBefore:"", expirationDate:"",availibiltyDate:"",description:""})
     const [fileName,setFileName]= useState("")
     const onChangeFile=e=>{ setFileName(e.target.files[0])}
     
-    const {namebag,adresse,price,priceBefore,expirationDate,availibiltyDate}=state;
+    const {namebag,price,priceBefore,expirationDate,availibiltyDate}=state;
     const [error,setError]=useState("")
+
+    const [adresse, setAdress] = useState([]);
+
     formData.append("namebag", namebag)
     formData.append("adresse", adresse)
     formData.append("price", price)
@@ -48,7 +99,7 @@ const Add = () => {
     
     const handleSubmit= (e)=>{
         e.preventDefault();
-        if (!namebag || !adresse || !price || !expirationDate) {
+        if (!namebag || !price || !expirationDate) {
          // setError("input the fields first!")
 toast.error('input the fields first');
 
@@ -61,18 +112,39 @@ dispatch(addBag(formData))
 
 history.push('/bags')
     }}
+
+
+    const theme = useTheme();
+
+  const handleChanges = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setAdress(
+      // On autofill we get a the stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+
+
+
+
+
+
+    
    
     return (
     <div className="neoneff">
  
- <div class="back-button" style={{marginTop:"-240px"}}>
+ <div class="back-button" style={{marginTop:"-245px"}}>
   <div class="arrow-wrap"   onClick={()=> history.push('/custbag')}>
     <span class="arrow-part-1"></span>
     <span class="arrow-part-2"></span>
     <span class="arrow-part-3"></span>
   </div>
 </div>
-      <h6 style={{marginLeft:"550px", marginTop:"5"}}>Add new bag</h6>
+      <h6 className="add"style={{marginLeft:"550px", marginTop:"5",fontSize:"40px"}}>Add New Bag</h6>
       {error && <h3 style={{color:"red"}}> {error}</h3>}
       <div>
         
@@ -80,7 +152,7 @@ history.push('/bags')
       <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '22ch' },
+        '& .MuiTextField-root': { m: 1, width: '24ch' },
       }}
       noValidate
       autoComplete="off"
@@ -102,13 +174,28 @@ history.push('/bags')
           name="description" color="warning"
           onChange={handleChange}
         />
-           <TextField
-          id="outlined-multiline-flexible"
-          label="Adresse"
-          multiline
-           name="adresse" color="warning"
-         onChange={handleChange}
-        />
+            <FormControl sx={{ m: 1, width: 300 }}>
+        <InputLabel id="demo-multiple-name-label" name="adresse">adresse</InputLabel>
+        <Select
+          labelId="demo-multiple-name-label"
+          id="demo-multiple-name" name="adresse"
+          multiple
+          value={adresse}
+          onChange={handleChanges}
+          input={<OutlinedInput label="adresse" name="adresse"/>}
+          MenuProps={MenuProps}
+        >
+          {adresses.map((adresse) => (
+            <MenuItem name="adresse"
+              key={adresse}
+              value={adresse}
+              style={getStyles(adresse, adresse, theme)}
+            >
+              {adresse}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
             <TextField
           id="outlined-multiline-flexible"
           label="Price"
@@ -161,19 +248,20 @@ history.push('/bags')
 
         <div className="form-group">
           <label htmlFor="file" style={{color:"black"}}>Choose image</label>
-        <input type="file" filename="image" className="form-control-file" style={{color:"black"}}
+        <input type="file" filename="image" className="form-control-file" multiple style={{color:"black"}}
       onChange={(e) => {
         setFileName(e.target.files[0]);
         console.log("files", e.target.files[0]);
       }}/>
+
         </div>
 
 </Box>         
 
-        <Form.Field
+        <Form.Field 
           id="form-button-control-public"
           control={Button}
-          content="Confirm" 
+          content="ADD +" 
           onChange={handleChange}
 
         />

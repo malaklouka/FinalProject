@@ -28,7 +28,7 @@ const BagList = () => {
       <div className="addbtn">
           <div className="buttons">
           <Link to="/addUser">
-    <Button className="aj ajout" style={{marginTop:100,marginLeft:450}}> 
+    <Button className="aj ajout" style={{marginTop:100,marginLeft:550}}> 
     Add
     </Button>
 </Link>

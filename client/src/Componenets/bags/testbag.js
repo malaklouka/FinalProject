@@ -11,6 +11,7 @@ import ImageSlider from '../../pages/images'
 import Recommended from './recommended'
 import './view.css'
 import {addtod,addtoDemande,addDmnd} from '../../JS/actions/demandes'
+import Topbag from '../custbag/Topbag'
 import { Link } from 'react-router-dom'
 
 import Box from '@mui/material/Box';
@@ -41,8 +42,9 @@ dispatch(getbagId(id))
   return (
     <div>
     <div className="cardd transition">
+      <div>
     <h5 className="transition">Bag's Details:</h5>
-    <h6 className="textt">{bag.bagname}</h6>
+    <h6 className="textt" style={{color:"red", fontSize:"100px"}}>{bag.namebag}</h6>
     <p>{bag.description}</p>
     <div className="cta-container transition"><a href="#" className="cta">
     <Link to='/mydemande'>
@@ -52,9 +54,9 @@ dispatch(getbagId(id))
           </Button>
           </Link>
           </a></div>
-    <div className="card_circle transition">{bag.image}</div>
+    <div className="card_circle transition"></div>
   </div>
-
+</div>
   {/**recommendations bags filter by aadress  */}
   <Recommended/>
   </div>

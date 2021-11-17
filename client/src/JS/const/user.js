@@ -6,3 +6,5 @@ export const FAIL_USER="FAIL_USER"
 export const CURRENT_USER="CURRENT_USER"
 export const LIKE_BAG="LIKE_BAG"
 export const UNLIKE_BAG="UNLIKE_BAG"
+export const GET_ALL_STOREK = "GET_ALL_STOREK";
+export const GET_ALL_CUST= "GET_ALL_CUST";

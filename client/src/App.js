@@ -19,13 +19,22 @@ import Editbag from './Componenets/bags/editbag';
 import RecommandedBag from './Componenets/custbag/recommandedBag';
 import Showbag from './Componenets/bags/testbag'
 import Home from './Componenets/filter/filter'
-import StickyFooter from './Componenets/footer/footer';
+import Footer from './Componenets/footer/footer';
 import Landing from './Componenets/landing/landing';
 import Search from './Componenets/search'
 import CustDashboard from './Componenets/dashboard/custdashboard';
 import Header from './Componenets/landing/header'
 import OneDemande from './Componenets/custdemandes/demande'
 import Demandelist from './Componenets/custdemandes/mesdemandes'
+import ListDmd from './Componenets/testDemand/ListDmd'
+import Profile from './Componenets/profile/Profile';
+import EditProfile from './Componenets/profile/EditProfile';
+import CustList from './Componenets/adminGestion/Allcust'
+import StoreList from './Componenets/adminGestion/Allstore';
+import Dashboard from './Componenets/dashAdmin/Dashboard';
+import Topbag from './Componenets/custbag/Topbag'
+import Qrcode from './Componenets/bags/Qrcode'
+import Contact from './Componenets/landing/Contact'
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -38,7 +47,6 @@ function App() {
         Add
       </Button></Link>*/} 
       <Header/>
-     
 <Switch>
   <Route exact path='/' component={Landing}/>
   <Route exact path='/signup' component={Signup}/>
@@ -49,18 +57,28 @@ function App() {
   <Route path="/baag" component={Bag}/>
   <Route path="/bags" component={BagList}/>
   <Route exact path='/addUser' component={Add}/>
-  <CustRoute  path="/custbag" component={BagListC}/>
+  <Route  path="/custbag" component={BagListC}/>
  <Route path='/bagdetail/:id' component={Showbag}/>
  <Route path='/editbag/:id' component={Editbag}/>
  <Route path="/recomnd/:id" component={RecommandedBag}/>
 <Route path="/home" component={Home}/>
 <Route path="/bags/search/:adresse" component={Search}/>
-{/*<Route path="/mydemande" component={OneDemande}/>*/}
-<Route path="/mydemande" component={OneDemande}/>
+<Route path="/thedemande" component={ListDmd}/>
+<Route path='/profile' component={Profile}/>
+<Route path='/Editprofil' component={EditProfile}/>
+<Route path="/admin" component={CustList}/>
+<Route path="/storek" component={StoreList}/>
+<Route path='/dashadmin' component={Dashboard}/>
+<Route path='/topbags' component={Topbag}/>
+<Route path='/qrcode' component={Qrcode}/>
+<Route path='/contact' component={Contact}/>
+
+
+{/*<Route path="/mydemande" component={ListDmd}/>*/}
 
 </Switch>
-{/*<StickyFooter/>
-*/}
+<Footer/> 
+
     </div>
   );
 }

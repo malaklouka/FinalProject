@@ -4,7 +4,8 @@ const Bag=require("../models/bag")
 //customerMiddelware==> only cust can add/delete/get his demande
 //storek middelware ==> only storek can accepte/refuse get custdemnd 
 
-exports.addTo=async(req,res)=>{
+//add to demand 
+  {/*exports.addTo=async(req,res)=>{
   try {
     await User.findOneAndUpdate({id:req.user._id},{demande:req.body})
 const finduser=await User.findById(req.user._id)
@@ -13,15 +14,13 @@ res.send({msg:"successfult added",user:finduser})
   } catch (error) {
    res.status(400).send({error,msg:"error while demande"}) 
   }
-}
+}*/}
 
 
-//get all the cust dmnd 
+{/*//get all the cust dmnd 
 exports.getDemandeCust = async (req, res) => {
   try {
-    const demandes = await Demande.find().populate(
-      "id_bag id_customer"
-    );
+    const demandes = await Demande.find()
     res.status(200).send({ msg: "the demandes of customer ", demandes });
   } catch (error) {
     console.log(error);
@@ -29,7 +28,21 @@ exports.getDemandeCust = async (req, res) => {
       .status(400)
       .send({ errors: [{ msg: "error", error }] });
   }
-};
+};*/}
+//get one dmnd
+exports.getOneD= async(req,res)=>{
+  try {
+    const OneD=await Bag.findOne(id)
+    res.status(200).send({OneD,msg:"one demande"})
+  } catch (error) {
+    res
+    .status(400)
+    .send({ errors: [{ msg: "can not add this demande", error }] });
+  }
+}
+
+
+
 
 // GET ALL DMND
 exports.getDemande = async (req, res) => {
@@ -43,7 +56,7 @@ exports.getDemande = async (req, res) => {
       .send({ errors: [{ msg: "can not add this demande", error }] });
   }
 };
-//cust: add bag to mes dmnds
+{/* //cust: add bag to mes dmnds
 exports.addtoDemande = async (req, res) => {
   try {
     const id_bag = req.body._id
@@ -51,10 +64,10 @@ exports.addtoDemande = async (req, res) => {
     
     const newDemande = new Demande({   ...req.body, userId: req.user})
 //verif if ag exist or not
-{/*const existed=await Demande.findOne({id_bag})
+const existed=await Demande.findOne({id_bag})
 if (existed){
     return res.status(200).send({msg:"this bag already exist"})
-}*/}
+}
 
     await newDemande.save()
     res.status(200).send({ newDemande,msg: "congrats your demande is saved with success :) " })
@@ -62,11 +75,11 @@ if (existed){
     console.log(error)
     res.status(400).send({ errors: [{ msg: "oops!! we cannot add this demande", error }] })
   }
-}
+}*/}
 //get mydmnd 1*
 exports.getMyDmnd = async (req, res) => {
   try {
-    const demande = await Demande.find({ user: req.user }).populate('_id')
+    const demande = await Demande.find({ user: req.user })
   
     res.status(200).send({ msg: "success",  demande });
   } catch (err) {
@@ -74,9 +87,29 @@ exports.getMyDmnd = async (req, res) => {
     res.status(400).send({ msg: "error", msg: err.message });
   } 
 };
-//
-
+// get all dmnds +idstorekeeper
  
+exports.getD=async(req,res)=>{
+try {
+
+    const demds= await Bag.find().populate({path:"id_storekeeper",select: 'name'})
+    res.send({demds, msg:"all the bags "})
+} catch (error) {
+    console.log(error)
+    res.status(401).send({msg:"error while getting all bags"})
+}
+} 
+//////////////////// ??
+{/* exports.getmyd=async(req,res)=>{
+  try {
+
+    const mdemand = await Bag.find({ user: req.user })
+      res.send({mdemand, msg:"all the bags "})
+  } catch (error) {
+      console.log(error)
+      res.status(401).send({msg:"error while getting all bags"})
+  }
+  }*/}
 
 
 //get dmd by id
@@ -98,9 +131,9 @@ exports.getdmndbyid=async(req,res)=>{
 if (demand){
   //test if demand exists => increment quantity
 //res.status(200).send({msg:demand})
-const bagg=req.body.items.bag
+const bagg=req.body
 console.log(bagg)
-const itemm=demand.items.find((c)=> c.bagg === bagg )
+const itemm=demand.items.find((c)=> c.bag === bagg )
 console.log(itemm)
 if (itemm){
   Demande.findOneAndUpdate({"user":req.user._id,"items.bag":bagg},{
@@ -153,7 +186,7 @@ exports.getAcceptedDemande = async (req, res) => {
 console.log(user)
     const demandes = await Demande.find({
      user, isAccepted: true ,
-    }).populate('id_bag id_customer')
+    })
     console.log(demandes)
 
     res.status(200).send({ msg: "accepted demandes", demandes }); 

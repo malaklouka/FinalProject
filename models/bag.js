@@ -30,6 +30,7 @@ const bagSchema= new mongoose.Schema({
    ref:"bag",
 
   },
+ 
     namebag:{
         type:String,
     },
@@ -50,12 +51,13 @@ const bagSchema= new mongoose.Schema({
     category:{
         type:String,
     },
+    pricebefore:{
+      type:Number
+    },
     price:{
         type:Number,
     },
-    priceBefore:{
-      type:Number
-    },
+    
     expirationDate:{
         type:Date,
 
@@ -90,7 +92,8 @@ const bagSchema= new mongoose.Schema({
     createDate:{
         type:String,
         default:Date.now()
-    }
+    },
+    storekeeper:{type:String}
 
 
 })

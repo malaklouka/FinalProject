@@ -1,15 +1,16 @@
 const express=require('express')
 const bagRouter=express.Router()
 const Bag =require('../models/bag')
+const User=require("../models/user")
 const controllers=require('../controllers/bag')
-const multer=require('multer')
 const {isCust}=require('../middleware/isCust')
 const isAuth=require('../middleware/passport')
 const {isStorek}=require('../middleware/isStorek')
+const multer=require('multer')
 
 const storage= multer.diskStorage({
   destination:function(req,file,callback){
-    callback(null,"./uploads/")
+    callback(null,"uploads/")
   }, 
   filename:function(req,file, callback){
     callback(null, file.originalname)
@@ -39,7 +40,7 @@ try {
   const LIMIT=8
   const startIndex=(Number(page)-1)*LIMIT
   const total= await Bag.countDocuments({})
-    const bags= await Bag.find().populate("id_customer id_storekeeper")
+    const bags= await Bag.find().populate({path:"id_storekeeper",select: 'name'})
     res.send({bags, currentPage:Number(page),numberOfPages:Math.ceil(total/LIMIT),msg:"all the bags "})
 } catch (error) {
     console.log(error)
@@ -47,7 +48,7 @@ try {
 }
 })
 //delete bag isStorek() middelware
-bagRouter.delete('/:id',isAuth(),async(req,res)=>{
+bagRouter.delete('/:id',isAuth(),isStorek,async(req,res)=>{
   const { id } = req.params
     try {
         const result = await Bag.findByIdAndRemove(id)
@@ -60,7 +61,7 @@ bagRouter.delete('/:id',isAuth(),async(req,res)=>{
 
 //get bags by location
 //filter bags
-bagRouter.get('/bags/:adresse',isAuth(),async(req,res)=>{
+bagRouter.get('/bags/:adresse',isAuth(),isCust,async(req,res)=>{
     try {
       //test adresse
       const adresse=req.params.adresse
@@ -97,16 +98,18 @@ bagRouter.get('/:id',isAuth(),async(req,res)=>{
   }
   })
 //add new bag
-bagRouter.post('/bags', upload.single("image"),isAuth(),async(req,res)=>{
-  
-  const {namebag,description,adresse,rating,category,price,
-    numProduct,expirationDate,availibilityDate,image,id_customer,id_storekeeper}=req.body
+bagRouter.post('/bags', upload.array("image",7),isAuth(),isStorek,async(req,res)=>{
+  const user = req.user;
+const bag=req.body
+{/*  const {namebag,description,adresse,rating,category,price,priceBefore,
+numProduct,expirationDate,availibilityDate,image,id_storekeeper}=req.body*/}
   //  const image=req.body.file.filename => err backend filename undefined
-  
-  const newbag = new Bag({ namebag, description, adresse, rating, category,price,numProduct, image,expirationDate,availibilityDate,id_customer,id_storekeeper
-  }) 
-  console.log(req.file)
- 
+ { /*
+  const newbag = new Bag({ namebag, description, adresse, rating, 
+    category,price,priceBefore,numProduct, image,expirationDate,availibilityDate,id_storekeeper: user
+  })*/}
+  const newbag = new Bag({ ...bag, storekeeper: req.user.name })
+
   try {
         
         await newbag.save()
@@ -117,6 +120,11 @@ bagRouter.post('/bags', upload.single("image"),isAuth(),async(req,res)=>{
         res.status(401).send({msg:"cant post bag"})
 
     }
+})
+//sort bags
+bagRouter.get("/bag/top",async (req, res) => {
+  const topbags = await Bag.find({}).sort({ likes: -1 }).limit(3)
+  res.status(200).send(topbags)
 })
 //review bag
 bagRouter.post('/:id/reviews',async (req, res) => {
@@ -156,8 +164,7 @@ bagRouter.post('/:id/reviews',async (req, res) => {
     console.log(user)
   })
   //update bag
-  bagRouter.put("/:id",upload.single("image"), isAuth(),async(req,res)=>{
-      const image=req.file.filename 
+  bagRouter.put("/:id", isAuth(),isStorek,async(req,res)=>{
 
     try {
       const updatedbag = await Bag.updateOne(
@@ -173,11 +180,7 @@ bagRouter.post('/:id/reviews',async (req, res) => {
       res.status(400).send({ msg: "sorry we cannot modify this bag " });
     }  
   })
-//sort bags
-  bagRouter.get("/top",async (req, res) => {
-    const bags = await Bag.find({}).sort({ rating: -1 }).limit(3)
-    res.send(bags)
-  })
+
 //update status  
 bagRouter.put("/status/:id",async(req,res)=>{
   try {
@@ -212,8 +215,11 @@ res.send(updatedBag)
 
   
 }) 
+
+
+
 //like unlike:> err
-bagRouter.put('/:id/like',isAuth(),async (req, res) => {
+{/*bagRouter.put('/:id/like',isAuth(),isCust,async (req, res) => {
   const { id } = req.params
   try {
     const bag = await Bag.findById(id)
@@ -226,17 +232,27 @@ return res.status(400).send({msg:"bag already liked"})
 res.send(bag.likes)
   } catch (error) {
     res.status(500).send('error')
-  }})
+  }})*/}
 //status updating
-bagRouter.patch('/:id/status',async (req, res) => {
-  const { id } = req.params
-  const bag = await Bag.findById(id)
-
-//is reserved change 
-  const updatedStatus = await Bag.findByIdAndUpdate(id,{isReserved:!bag.isReserved},{ new: true });
+bagRouter.patch('/:id/status',isAuth(),isCust,async (req, res) => {
+  try {
+    const { id } = req.params
+    const user = req.user;
   
-  res.send(updatedStatus)
+    const bag = await Bag.findById(id)
+  
+                            //is reserved change 
+    const updatedStatus = await Bag.findByIdAndUpdate(id,{isReserved:!bag.isReserved},{ new: true });
+    
+    res.send(updatedStatus)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+
 })
+
+
+
 //get mes dmnds
 bagRouter.get('/:id/order',async(req,res)=>{
 ///////////////////////////////
@@ -254,11 +270,10 @@ bagRouter.post('/filter' , controllers.filterController);
 
 
 // LIKE BAG
-bagRouter.put("/current/like/:id", isAuth(), controllers.like);
+bagRouter.put("/current/like/:id", isAuth(),isCust, controllers.like);
 
 // UNLIKE BAG
-bagRouter.put("/current/unlike/:id", isAuth(), controllers.unlike);
-
+bagRouter.put("/current/unlike/:id", isAuth(),isCust, controllers.unlike);
 
 module.exports=bagRouter
   

@@ -1,5 +1,6 @@
 const mongoose=require('mongoose')
 const userSchema= new mongoose.Schema({
+  
   name:{
       type:String
     },
@@ -20,12 +21,29 @@ const userSchema= new mongoose.Schema({
     role:{
         type: String,
         required: false,
-        enum: ["storekeeper", "customer"],
+        enum: ["storekeeper", "customer","admin"],
         default:"customer"
+    },
+    gender:{
+      type: String,
+      enum:["female","male"]
+    },
+    dateofbirth:{
+         type: Date
+    },
+    adresse:{
+      type: String
+    },
+    avatar:{
+         type: String
     },
     demande:{
       type:Array,
       default:[]
+    },
+    banned:{
+      type:Boolean,
+      default:false
     }
       
   })

@@ -1,43 +1,29 @@
 
-.text-box {
-	height:350px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: white;
-	position: fixed;
-	top: 0px;
-	width: 100%;
-	z-index: 100;
-	margin-left: 50px;
-	opacity: 0.6;
-	margin-top: 150px;
-  }
   .text-box {
-	height:300px;
+	height:250px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	color: white;
 	position: fixed;
 	top: 0px;
-	width: 100%;
+	width: 50%;
 	z-index: 100;
 	margin-left: 500px;
-	opacity: 0.6;
+	opacity: 0.8;
 	margin-top: 150px;
   }
   
 .text-box {
 	position: absolute;
 	top: 20%;
-	left: 35%;
+	left: 25%;
 	transform: translate(-50%, -50%);
 	text-align:center;  
   }
   
   .heading-primary {
-	  color:#08442c;
+	  color:#49705d;
 	  text-transform: uppercase;
   }
   
@@ -204,26 +190,20 @@ h1 {
 
 
 
-body{
-	margin:0;
-	color:#6a6f8c;
-	background:#f8f5f6;
-	font:600 16px/18px 'Open Sans',sans-serif;
-}
-*,:after,:before{box-sizing:border-box}
-.clearfix:after,.clearfix:before{content:'';display:table}
-.clearfix:after{clear:both;display:block}
-a{color:inherit;text-decoration:none}
+
 
 .login-wrap{
 	width:50%;
 	margin:10px;
-	max-width:425px;
-	min-height:600px;
-	border-radius: 15px;
-	color: #457963;
+	max-width:380px;
+	min-height:550px;
+	color: #022215;
 	position:relative;
-	background:url(https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1374&q=80) no-repeat center;
+	background-color: #ffffff10;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+	border-radius: 25px 4px;
+
 }
 .login-html{
 	width:100%;
@@ -262,7 +242,7 @@ a{color:inherit;text-decoration:none}
 }
 .login-html .sign-in:checked + .tab,
 .login-html .sign-up:checked + .tab{
-	color:#fff;
+	color:rgb(14, 12, 12);
 	border-color:#1161ee;
 }
 .login-form{
@@ -281,13 +261,16 @@ a{color:inherit;text-decoration:none}
 	color:rgb(3, 3, 3);
 	display:block;
   margin-left: 50%;
+
+  
 }
 .login-form .group .input,
 .login-form .group .button{
 	border:none;
 	padding:15px 20px;
-	border-radius:25px;
-	background:rgba(255,255,255,.1);
+	border-radius: 24px 4px;
+	border-color: violet;
+	background:#94b8a6;
 }
 .login-form .group input[data-type="password"]{
 	text-security:circle;
@@ -298,7 +281,7 @@ a{color:inherit;text-decoration:none}
 	font-size:12px;
 }
 .login-form .group .button{
-	background:#f0f1f3;
+	background:#e6f0eb;
 }
 .login-form .group label .icon{
 	width:15px;
@@ -313,7 +296,7 @@ a{color:inherit;text-decoration:none}
 	content:'';
 	width:10px;
 	height:2px;
-	background:#fff;
+	background:#49705d;
 	position:absolute;
 	transition:all .2s ease-in-out 0s;
 }
@@ -329,7 +312,7 @@ a{color:inherit;text-decoration:none}
 	transform:scale(0) rotate(0);
 }
 .login-form .group .check:checked + label{
-	color:#fff;
+	color:rgb(255, 255, 255);
 }
 .login-form .group .check:checked + label .icon{
 	background:#1161ee;

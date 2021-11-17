@@ -3,15 +3,19 @@
 //add new dmnd : idcust + idbag want to buy it 
 const express = require("express");
 const Demande=require('../models/Demande')
-const { addtoDemande,addTo, addItems,getDemandeCust,getdmndbyid, acceptdmnd,getDemande,cancelDemande,getAcceptedDemande,acceptcustdmnd,getMyDmnd}=require("../controllers/Demande")
+const Bag =require('../models/bag')
+const { addtoDemande,addTo, addItems,getDemandeCust,getdmndbyid, getD,getOneD,acceptdmnd,getDemande,cancelDemande,getAcceptedDemande,acceptcustdmnd,getMyDmnd}=require("../controllers/Demande")
 const Dmndrouter = express.Router();
 const isAuth=require('../middleware/passport')
 Dmndrouter.get("/alldemande",getDemande)
-Dmndrouter.get("/cust/alldemande", getDemandeCust)
-Dmndrouter.post("/addtodmnd",isAuth(),addTo)
+//Dmndrouter.get("/cust/alldemande", getDemandeCust)
+//Dmndrouter.post("/addtodmnd",isAuth(),addTo)
 Dmndrouter.post('/additemsto',isAuth(),addItems)
+Dmndrouter.get('/d',isAuth(),getD)
+Dmndrouter.get('/oned',isAuth(),getOneD)
+//Dmndrouter.get('/myd',isAuth(),getmyd)
 
-Dmndrouter.post("/addt",isAuth(), addtoDemande)
+//Dmndrouter.post("/addt",isAuth(), addtoDemande)
 Dmndrouter.delete("/cancel/:id",isAuth(),cancelDemande)
 Dmndrouter.get("/acc",isAuth(),getAcceptedDemande)
 Dmndrouter.patch("/accept/:id",isAuth(),acceptcustdmnd)
@@ -35,8 +39,7 @@ Dmndrouter.patch('/:id_demande/status',async (req, res) => {
   })
 
 
-
-
+ 
 
 
 
@@ -77,8 +80,9 @@ Dmndrouter.post('/testadd', isAuth(), (req, res) => {
   });
 
   //get demand by user
-  Dmndrouter.get('/getdbyuser',(req, res) => {
-    Demande.findOne({ user: req.user.id })
+{ /* Dmndrouter.get('/dem/getdbyuser',(req, res) => {
+
+    Demande.findOne({ user: req.user._id })
     .populate('items.bag')
     .exec((err, bag) => {
       if (!bag) {
@@ -88,7 +92,7 @@ Dmndrouter.post('/testadd', isAuth(), (req, res) => {
       res.send(bag);
     });
   });
-  
+*/}
   Dmndrouter.put('/', isAuth(), (req, res) => {
     Cart.findById(req.body.cartId)
       .then((foundCart) => {
@@ -103,9 +107,74 @@ Dmndrouter.post('/testadd', isAuth(), (req, res) => {
       .then(() => res.end())
       .catch((err) => res.send(err));
   });
-
-
+///////////////////
+  Dmndrouter.post('/test/add', isAuth(), async (req, res) => {
+    try {
+      const { bag, isReserved } = req.body;
+      const user = req.user;
+      const update = {
+        bag,
+        isReserved,
+        updated: Date.now()
+      };
+      const query = { bag: update.bag, user: user._id };
   
+      const updatedDemand = await Demande.findOneAndUpdate(query, update, {
+        new: true
+      })
+  
+      if (updatedDemand !== null) { 
+        res.status(200).send({
+          success: true,
+          message: 'Your demand has been updated successfully!',
+          demand: updatedDemand
+        });
+      } else {
+        const demand = new Demande({
+          bag,
+          isReserved,
+          user: user._id
+        });
+  
+        const demandDoc = await demand.save();
+  
+        res.status(200).send({
+          success: true,
+          message: `Added to your demand successfully!`,
+          demand: demandDoc
+        });
+      }
+    } catch (error) {
+       res.status(400).send({error,
+        error: 'Your request could not be processed. Please try again.'
+      });
+      console.dir(error)
+
+    }
+  });
+  
+// get dmnd list 
+Dmndrouter.get('/dmd/getthd', isAuth(), async (req, res) => {
+  try {
+    const user = req.user._id;
+
+    const thedemand = await Demande.find({ user, isReserved: true })
+      .populate({
+        path: 'bag',
+        select: 'namebag price image'
+      }).sort('-updated');
+console.log(thedemand)
+    res.status(200).send({
+      thedemand
+    });
+  } catch (error) {
+    res.status(400).send({
+      msg: 'Your request could not be processed. Please try again.',error
+    });
+  }
+});
+
+
 
 
 

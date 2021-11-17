@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Header from "../../Componenets/landing/header"
 // components
 
 // redux
@@ -11,10 +12,11 @@ const CustDashboard = () => {
     const user=useSelector(state=>state.userReducer.user)
 
 	return (
-		<section>
+		<div>
+
 	      <h1>Welcome {user&&user.name}</h1>
 		
-		</section>
+		</div>
 	);
 };
 

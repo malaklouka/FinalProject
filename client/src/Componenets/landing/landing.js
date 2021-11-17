@@ -3,10 +3,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Carousel from 'react-bootstrap/Carousel';
 import Header from './header'
 import './aboutus.css'
+import { FaSearchLocation,FaLaughBeam,FaDove } from 'react-icons/fa';
+import * as emailjs from 'emailjs-com';
+import Contact from "./Contact"
+
+
+
 const Landing=()=> {
+  
+ 
 return (
-	<div >
-        <Header/>
+	<div className="land">
         	<Carousel>
 		<Carousel.Item interval={1500}>
 		<img
@@ -57,14 +64,14 @@ src="https://images.unsplash.com/photo-1532549872809-c1b33d87e76e?ixid=MnwxMjA3f
       <div className="container">
         <div className="row">
           <div className="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200" >
-            <span className="fa fa-search"></span>
+            <span className="fa fa-search"><FaLaughBeam/></span>
             <h2>How?</h2>
             <h3>
             SAVE UNSOLD DELICIOUS
                    AT AN ADVANTAGEOUS PRICE!</h3>
           </div>
           <div className="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
-            <span className="fa fa-info"></span>
+            <span className="fa fa-info"><FaDove/></span>
             <h2>For what? </h2>
             <h3>
             MAKE THE DIFFERENCE
@@ -72,7 +79,8 @@ WE BUILD BIG THINGS               </h3>
           </div>
           <div className="clearfix visible-md-block visible-sm-block"></div>
           <div className="col-lg-4 col-sm-6 col-ex-12 about-item wow lightSpeedIn" data-wow-offset="200">
-            <span className="fa fa-file"></span>
+            <span className="fa fa-file">            <FaSearchLocation/>
+</span>
             <h2>Who ?</h2>
             <h3>
             AN ESSENTIAL SOLUTION FOR RETAILERS
@@ -83,7 +91,9 @@ BECOME A PARTNER!</h3>
         
       </div>
     </section>
+
     </div>
+<Contact/>
 	</div>
 );
 }

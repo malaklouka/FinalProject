@@ -1,9 +1,11 @@
 const express=require('express')
 const storeRouter=express.Router()
+const {getProfile,postProfile} =require('../controllers/storecontroller')
 const StoreKeeper=require('../models/storeKeeper')
 const isStorek=require('../middleware/isStorek')
 
-//signin route
+
+{/* //signin route
 storeRouter.post('/signin/store',isStorek, async(req,res)=>{
     try {
        const storekExist=await StoreKeeper.findOne({email:req.body.email}) 
@@ -45,6 +47,42 @@ storeRouter.post("/register/store",async({body},res)=>{
     res.status(401).send({msg:"error while registering as storekeeper"})
        
 }
+})*/} 
+
+//storeRouter.get("/profile/:id", isAuth(), getProfile);
+storeRouter.get('/profile',
+isAuth(),
+async(req,res)=>{
+    try {
+        const response = await User.findOne()
+        res.send(response)
+    } catch (error) {
+        res.status(400).send({msg:'No user get it'})
+    }
 })
+
+storeRouter.put('/editprofil/:id',isAuth(),async (req, res) => {
+    try {
+     const updatedProfil= await User.updateOne({ _id: req.params.id }, { $set: { ...req.body } });
+     console.log(updatedProfil);
+     if (updatedProfil.modifiedCount) {
+        res.status(200).send({ msg: "profil updated with success :) ",updatedProfil });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).send({ msg: "proofile is not edited ", error });
+    }
+  })
+  storeRouter.get('/profil/:id',isAuth(),async(req,res)=>{
+    try {
+      //test adresse
+      const { id } = req.params
+      const userp= await User.findById(id)
+        res.send({userp,msg:"user successfully "})
+    } catch (error) {
+        console.log(error)
+        res.status(401).send({msg:"error while getting one bag"})
+    }
+    })
 
 module.exports=storeRouter

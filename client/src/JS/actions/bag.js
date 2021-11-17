@@ -1,7 +1,7 @@
 import {LOAD_BAGS,GET_BAGS_SUCCESS,GET_BAGS_FAIL,DELETE_BAG,IS_RESERVED,LIKE, FETCH_BAGS, FILTER_BAGS_BY_ADRESSE, IS_ADDED} from "../const/bag"
 import axios from "axios"
 import { GET_ORDERS_SUCCESS, LOAD_ORDERS } from "../const/order"
-import { addDmnd } from "./demandes"
+import { addDmnd, getdemandes, getmyD } from "./demandes"
 //get all bags: cust get all the bags + storek get all bags too
   export const getbags = () => async (dispatch) => {
     dispatch({ type: LOAD_BAGS })
@@ -30,8 +30,8 @@ import { addDmnd } from "./demandes"
           authorization: localStorage.getItem("token"),
         },
       };
-      const response= await axios.get(`/aa/bags/${adresse.toLowerCase()}`,config)
-      dispatch({ type: GET_BAGS_SUCCESS, payload: response.data})
+      const response= await axios.get(`/aa/bags/${adresse}`,config)
+      dispatch({ type: GET_BAGS_SUCCESS, payload: response.data.onebag})
 console.log(response.data)
      // dispatch(filterBagByAdress(adresse, response.data.bags))
  }
@@ -91,7 +91,7 @@ console.log(response.data)
     try {
       const reservedbag= await axios.patch(`/aa/${id}/status`)
       dispatch ({type:IS_RESERVED, payload:reservedbag.data})
-      dispatch(getbags() )
+      dispatch(getdemandes() )
     } catch (error) {
       console.log(error)
       
@@ -219,4 +219,17 @@ export const filterBags = (adresse)=>async(dispatch)=>{
   }
   
 
-  
+  export const topbag=()=>async(dispatch)=>{
+    try {
+      const config = {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      };
+      const response=await axios.get("aa/bag/top",config)
+      dispatch({ payload: response.data });
+   
+    } catch (error) {
+      console.log(error)
+    }
+  }

@@ -68,10 +68,15 @@ setState({...bag})
    }
   return (
     <div>
-      <Button style={{ width: "100px", marginTop: "20px"}} variant="contained" color="black" 
-      onClick={()=> history.push('/bags')}> back 
-      </Button>
-      <h3>Edit bag</h3>
+       <div class="back-button" style={{marginTop:"-245px"}}>
+  <div class="arrow-wrap"   onClick={()=> history.push('/bags')}>
+    <span class="arrow-part-1"></span>
+    <span class="arrow-part-2"></span>
+    <span class="arrow-part-3"></span>
+  </div>
+</div>
+     
+      <h3 className="editbag" style={{fontFamily:"Great Vibes", fontSize:"50px", marginLeft:"550px", color:"white"}}>Edit bag</h3>
       {error && <h3 style={{color:"red"}}> {error}</h3>}
       <Form onSubmit={handleSubmit} >
       <Box

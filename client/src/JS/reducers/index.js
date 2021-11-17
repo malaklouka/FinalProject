@@ -3,4 +3,5 @@ import { userReducer } from "./userReducer"
 import { bagReducer } from "./bagReducer"
 import { demandeReducer } from "./dmndReducer"
 import {addtoReducer} from "./addtoReducer"
-export const rootReducer=combineReducers({userReducer,bagReducer,demandeReducer,addtoReducer})
+import {adminReducer} from "./adminReducer"
+export const rootReducer=combineReducers({userReducer,bagReducer,demandeReducer,addtoReducer,adminReducer})

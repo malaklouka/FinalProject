@@ -177,4 +177,6 @@ body{
     transform: rotate(45deg);
     transform-origin: 0 0;
   }
-  
+  .nameb{
+    font-family: "Great Vibes",cursive;
+  }

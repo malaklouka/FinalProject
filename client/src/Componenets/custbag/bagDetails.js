@@ -1,130 +1,159 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Button, Card } from 'semantic-ui-react'
 import { useDispatch, useSelector } from "react-redux"
-import { deletebag, editBag,getOnebag, reservtBag } from '../../JS/actions/bag'
+import { deletebag, editBag,getOnebag, reservtBag,reserve } from '../../JS/actions/bag'
+import {addnewd} from '../../JS/actions/demandes'
 import {likePost} from '../../JS/actions/user'
 import Flippy, { FrontSide, BackSide } from 'react-flippy'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
-import { addOrder, getMyorders } from '../../JS/actions/order'
 
-import {addtod,addtoDemande,addDmnd} from '../../JS/actions/demandes'
 import '../bags/testbag.css'
 import { Link, useHistory } from 'react-router-dom'
 import Loader from '../spinneer'
 import { AiOutlineDelete,AiOutlineEdit,AiOutlineLike,AiTwotoneHeart,AiOutlineHeart } from "react-icons/ai";
-import { FaDollarSign, FaThumbsUp } from 'react-icons/fa';
+import { FaDollarSign, FaThumbsUp, FaEye } from 'react-icons/fa';
+
 
 import moment from 'moment';
-import { Carousel, Image } from 'react-bootstrap'
+import Carousel from 'react-material-ui-carousel';
+import CarouselSlide from 'react-material-ui-carousel';
+
 const BagDetails = ({bag}) => { 
     const [search, setSearch] = useState();
     const dispatch = useDispatch();
+    const loading = useSelector(
+      (state) => state.bagReducer.isLoading
+    );
+    const [availibiltyDate, setAvailibiltyDate]=  useState("availibiltyDate")
+    const [timerDays, setTimerDays] = useState('00');
+    const [timerHours, setTimerHours] = useState('00');
+    const [timerMinutes, setTimerMinutes] = useState('00');
+    const [timerSeconds, setTimerSeconds] = useState('00');
+ 
+    let interval=useRef();
+    const startTimer=()=>{
+      const countdownDate= moment(bag.availibiltyDate).valueOf();
+      interval= setInterval(()=>{
+        const now= new Date().getTime();
+        const distance=countdownDate - now;
+        const days= Math.floor(distance /(1000 * 60 * 60 * 24));
+        const hours= Math.floor((distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)));
+        const minutes= Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds= Math.floor((distance %(1000 * 60 )) / 1000);
+
+      if (distance < 0){
+        //stop timer
+        clearInterval(interval.current)
+      }
+      else {
+        setTimerDays(days);
+        setTimerHours(hours);
+        setTimerMinutes(minutes);
+        setTimerSeconds(seconds);
+      }
+      },1000);
+      
+      
+    };
+    //component didmount
+    useEffect(() => {
+      startTimer();
+      
+      return () => {
+        clearInterval(interval.current);
+      };
+    });
+    
+    {/*const calculateTimeLeft = () => {
+      let eventTime = moment(bag.availibiltyDate).valueOf();
+      console.log(eventTime)
+      let currentTime = (Math.floor(Date.now() / 1000)).toString();
+      let leftTime = eventTime - currentTime;
+      let duration = moment.duration(leftTime, 'seconds');
+      let interval = 1000;
+      if (duration.asSeconds() <= 0) {
+          clearInterval(interval);
+      }
+      duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+      return (duration.days() + ' Days ' + duration.hours()+ ' Hours ' + duration.minutes()+ ' Minutes ' + duration.seconds() + ' Seconds');
+  }
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+      setTimeout(() => {
+          setTimeLeft(calculateTimeLeft());
+      },1000);
+  });*/}
     const like = async (e) => {
       e.preventDefault();
      dispatch(likePost(bag._id));
     }
  // const bagtoshow = useSelector((state) => state.bagReducer.bags)
 
+ 
  const history=useHistory();
 
-    return (
-        <div className="cartbag">
+    return  (
 
+        <div className="cartbag">
 
           
       <div className="detcontainer" >
   <span></span>
   <div className="detcontent">
- { /*<div className="row justify-content-md-center">
-                  <div className="col-lg-10  justify-content-center">
-                    <div>
-                    <Carousel pause='hover' className='bg-dark'>
-      {bagg.map((b) => (
-        <Carousel.Item key={b._id}>
-          <Link to={`/bags/${b._id}`}>
-            <Image src={b.image} alt={b.namebag} fluid />
-            <Carousel.Caption className='carousel-caption'>
-              <h2>
-                {b.name} ($ {b.price})
-              </h2>
-            </Carousel.Caption>
-          </Link>
-        </Carousel.Item>
-      ))}
-    </Carousel>
-                 
-                    </div>
-                  </div>
-                </div>*/}
-                { /* <OwlCarousel items={1}
-                        className="owl-theme"
-                        loop
-                        nav
-                        margin={3}
-                        autoplay={true} >
-                        {bag.image.map((img) => (
+  <Carousel  autoPlay={false} style={{height : "150px",width : "50%"}}>
+             <CarouselSlide>
+                     {bag.image.map((img) => (
 
-                          <img src={img.image} className="img-responsive" style={{ height: 550 }} alt="bag" />
+<img src={img} className="img-responsive"  alt="bag"width="220" height="190" style={{marginLeft:-25,marginTop:-45}} />
+                ))}
+                </CarouselSlide>
+            </Carousel>
+{/*
+  <Carousel autoPlay>
+             <CarouselSlide>
+                     {bag.image.map((img) => (
 
-                        ))}
-                        </OwlCarousel>*/}
-
- 
+<img src={img.image} alt="bag" />
+                ))}
+                </CarouselSlide>
+                     </Carousel>*/}
+ {/*
   <Carousel>
 		<Carousel.Item interval={1500}>
-		<img
-			className="d-block w-100"
-src="https://images.unsplash.com/photo-1573518011645-aa7ab49d0aa6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-			alt="Image One"
-		/>
-	
-		</Carousel.Item>
-		<Carousel.Item interval={500}>
-		<img
-			className="d-block w-100"
-src="https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-			alt="Image Two"
-		/>
-	
-		</Carousel.Item>
-    <Carousel.Item interval={500}>
-    <img
-			className="d-block w-100"
-src="https://images.unsplash.com/photo-1518171802599-4cd16785f93a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=925&q=80"
-			alt="Image Two"
-		/>
-   
-		</Carousel.Item>
-    <Carousel.Item interval={500}>
-    <img
-			className="d-block w-100"
-src="https://images.unsplash.com/photo-1532549872809-c1b33d87e76e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=871&q=80"
-			alt="Image Two"
-		/>
-   
-		</Carousel.Item>
-    
-	</Carousel>
+ {bag.image.map((img) => (
 
-    <h2 style={{color:"black"}}>{bag.namebag}</h2>
-    <h6 style={{color:"black"}}>{bag.price}dt instead of {bag.priceBefore}dt </h6>
-                            <h6 style={{color:"#0A775F", fontSize:"20px"}}> Adresse:{bag.adresse}</h6>
-  
-           <h6 style={{color:"white"}}>expired at : {moment(bag.expirationDate).format('DD/MM/YYYY')} </h6>
+<img src={img.image} className="img-responsive"  alt="bag" />
+
+                        ))}
+	
+		</Carousel.Item>   
+	    
+	</Carousel>*/}
+
+    <h2 className="nameb" style={{color:"black"}}>{bag.namebag}</h2>
+    <div>{timerDays}:{timerHours}:{timerMinutes}:{timerSeconds}</div>
+    <h6 style={{color:"black"}}>{bag.price}dt instead of {bag.pricebefore}dt </h6>
+    <h6 style={{color:"#0A775F"}}> Adresse:{bag.adresse}</h6>
+   <h6 style={{color:"red"}}>published by: {bag.storekeeper}</h6>
+
+    <h6 style={{color:"white"}}>expired at : {moment(bag.expirationDate).format('DD/MM/YYYY')} </h6>
           
     <div className="likes">
     <button onClick={like} className="likebtn" style={{ background:"none", border:"none"}}>
        <AiTwotoneHeart style={{fontSize:'20px', color:"red"}}/>     {bag.likes && bag.likes.length } 
 </button>
 <div className='ui two buttons' >
-              <Link to='/mydemande'>
+<Link to='/mydemande'>
+
           <Button style={{ background:"none", border:"none"}} onClick={()=>
-            dispatch(addDmnd({namebag:bag.namebag,price:bag.price,quantity:bag.quantity}))}>
+            dispatch(addnewd({bag:bag._id,price:bag.price,quantity:bag.quantity}))}>
             Reserver
           </Button>
           </Link>
           <Button style={{ color:"blue", background:"none", border:"none"}} onClick={()=>history.push(`/bagdetail/${bag._id}`)}>
-         <i class="fa fa-eye"></i> View </Button>
+          <FaEye/>View </Button>
          </div>
     </div>
     </div>

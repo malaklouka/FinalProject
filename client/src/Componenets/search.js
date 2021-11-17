@@ -37,10 +37,6 @@ const isLoading=useSelector((state)=>state.bagReducer.isLoading)
   const searchBag = () => {
     if (adresse.trim()) {
       dispatch(getOnebag({ adresse }));
-      history.push(`/custbag/search?searchQuery=${adresse}`);
-      
-
-
     } else {
       history.push("/");
     }

@@ -6,18 +6,16 @@ const demandeSchema = new mongoose.Schema({
     ref: 'User'
   },
  // expire: { type: Date, required: true, default: Date.now, expires: "1d" },
+ bag: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Bag'
+},
+quantity: {type: Number, default:1},
+price: {type:Number},
+isReserved:{type:Boolean,
+default:false}
 
-  items: [
-    {
-      bag: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Bag'
-      },
-      quantity: {type: Number, default:1},
-      price: {type:Number}
-
-    }
-  ]
+  
 },
 {timestamps:true}
 

@@ -9,6 +9,7 @@ import { Button } from 'semantic-ui-react';
 import Add from '../bags/addbag'
 import BagList from '../bags/Bag'
 import Navbar from '../Navbar'
+import Header from "../../Componenets/landing/header"
  import './dash.css'
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -17,13 +18,7 @@ const Dashboard = () => {
   
     return (
         <div className="dashb">
-          {/* <BagList/>
-          <h1>Welcome {user&&user.name}</h1>
-          <h1 className="title1"> SAVE MEALS
-</h1> <h1 className="title1"> HELP THE PLANET..
-          </h1>*/} 
-
-
+        
 
       <div className="sp-container">
 	<div className="sp-content">

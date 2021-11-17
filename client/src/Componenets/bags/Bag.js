@@ -12,11 +12,11 @@ import ImageSlider from '../../pages/images'
 import moment from 'moment';
 import Loader from '../spinneer'
 import Navbar from '../Navbar'
-import { AiOutlineDelete,AiOutlineEdit,AiOutlineLike,AiTwotoneHeart,AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineDelete,AiOutlineEdit,AiOutlineLike,AiTwotoneHeart,AiOutlineHeart,AiOutlineQrcode } from "react-icons/ai";
 import DeleteIcon from '@mui/icons-material/Delete';
 import './bags.css'
-import { Carousel } from 'react-bootstrap'
-
+import Carousel from 'react-material-ui-carousel';
+import CarouselSlide from 'react-material-ui-carousel';
 
 
 const OneBag = ({bag}) => { 
@@ -39,7 +39,7 @@ const OneBag = ({bag}) => {
       <Loader animation='grow' />
     ) : (
 
-        <div className="cardbg">
+        <div className="cardbg" >
 
 
 
@@ -47,17 +47,23 @@ const OneBag = ({bag}) => {
 
 
 
-     <Flippy  flipOnClick={false} flipOnHover={true} flipDirection="vertical" className='username' >
+     <Flippy  flipOnClick={false} flipOnHover={true} flipDirection="vertical" className='username'  >
 <FrontSide >
         <div className="container">
 <div className="imag">
-<img src= {bag.image} alt="img" width="295" height="290" style={{marginLeft:-25,marginTop:-45}}/>
+<Carousel  autoPlay={false} style={{height : "200px",width : "100%"}}>
+             <CarouselSlide>
+                     {bag.image.map((img) => (
+
+<img src={img} className="img-responsive"  alt="bag"width="295" height="200" style={{marginLeft:-25,marginTop:-45}} />
+                ))}
+                </CarouselSlide>
+            </Carousel>
+{/*<img src={bag.image} alt="img" width="295" height="290" style={{marginLeft:-25,marginTop:-45}}/>*/}
 </div>
-
-
-<h3 style={{fontSize:35,color:"#FFA500",marginRight:150,marginTop:-10}}> {bag.namebag}</h3>
-<span style={{color:"red",marginTop:60,marginLeft:152}}></span>{bag.price} dt <span style={{color:"red",textDecoration:"line-through "}}> {bag.priceBefore} dt</span>
-{/* <img src={`http://localhost:3000/uploads/${bag.image}`} alt="bag" height="150"/>
+<h3 className="namebag" style={{fontSize:35,color:"black",marginRight:150,marginTop:-10}}> {bag.namebag}</h3>
+<span style={{color:"red",marginTop:60,marginLeft:152}}></span>{bag.price} dt <span style={{color:"red",textDecoration:"line-through "}}> {bag.pricebefore} dt</span>
+{/* <img src={`/uploads/${bag.image}`} alt="bag" height="150"/>
 */} 
 
 
@@ -70,13 +76,13 @@ const OneBag = ({bag}) => {
             <div className="container">
             <div className='profil'>  
               
-          <span>    <AiTwotoneHeart fontSize="20" color="red"/> 
-    {bag.likeCount}  </span>          
+          <span style={{color:"white"}}>   {bag.likes && bag.likes.length }     <AiTwotoneHeart fontSize="20" color="red"/> 
+         </span>          
                           </div>
                           <ul>
-                            <li><span style={{color:"red"}}> Adresse: </span>{bag.adresse}</li>
-                            <li> <span style={{color:"red"}}>category:</span> {bag.category}</li>
-           <li><span style={{color:"red"}}>expired at : </span>{moment(bag.expirationDate).format('DD/MM/YYYY')}</li> 
+                            <li style={{color:"white"}}><span> Adresse: </span>{bag.adresse}</li>
+                            <li style={{color:"white"}}> <span>published by:</span> {bag.storekeeper}</li>
+           <li style={{color:"white"}}><span style={{color:"red", fontSize:"20px"}}>expired at : </span>{moment(bag.expirationDate).format('DD/MM/YYYY')}</li> 
           
                           </ul>
            
@@ -84,14 +90,19 @@ const OneBag = ({bag}) => {
             </div>
             <div style={{marginTop:90}} >
 
-                  <Button style={{color:"green", backgroundColor: "white",border:"white"}}
+                  <Button style={{color:"green", backgroundColor: "transparent",border:"white"}}
                       onClick={()=>history.push(`/Editbag/${bag._id}`)}><AiOutlineEdit/>
                                     edit
                    </Button>
           </div>
           <div style={{ paddingLeft:190,marginTop:-25}}>
-          <Button style={{color:"red",  backgroundColor: "white",border:"white"}}  onClick={()=>handleDelete(bag._id)}> <AiOutlineDelete/>
+          <Button style={{color:"red",  backgroundColor: "transparent",border:"white"}}  onClick={()=>handleDelete(bag._id)}> <AiOutlineDelete/>
             delete
+          </Button>
+          </div>
+          <div>
+          <Button style={{color:"blue",  backgroundColor: "transparent",border:"white"}} onClick={()=>history.push('/qrcode')}> <AiOutlineQrcode/>
+            Qr code
           </Button>
           </div>
         

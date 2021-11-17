@@ -26,7 +26,7 @@ const OneDemande = () => {
     const demand=useSelector(state=>state.demandeReducer.demandes)
     return (
     <div style={{margin:80}}>
-      {(demand || []).map(e=><Dlist dem={e} key={e._id}/>)}
+      {demand.map(e=><Dlist dem={e} key={e._id}/>)}
 {/*<h6> {demand.map(el=>el._id)}</h6>
 */}
  
