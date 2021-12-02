@@ -1,13 +1,11 @@
-body{
-    background: #070707;
-}
+
   .detcontainer {
     display: flex;
     align-items: center;
     position: relative;
     width: 320px;
     height: 400px;
-    margin: 40px 30px;
+    margin: 90px 30px;
     transition: 0.5s;
 
   }

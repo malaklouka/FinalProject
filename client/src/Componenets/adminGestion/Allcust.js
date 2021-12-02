@@ -7,7 +7,7 @@ import Cust from "./Cust";
 import './cust.css'
 
 const CustList = () => {
-  const custList = useSelector((state) => state.userReducer.cust);
+  const custList = useSelector((state) => state.adminReducer.custs);
 
   const dispatch = useDispatch();
 
@@ -20,10 +20,12 @@ const CustList = () => {
   return (
     <div>
       <Sidebar/>
-      <h1 className="cust" style={{marginLeft:"450"}}> List Of Customer</h1>{" "}
+      <div style={{marginLeft:"350px", justifyContent:"space-around",margin:"30"}}>
+      <h2> List Of Customer</h2>{" "}
       <div className="list">
       {custList && custList.map(e=><Cust cust={e} key={e._id}/>)}
 
+      </div>
       </div>
     </div>
   );

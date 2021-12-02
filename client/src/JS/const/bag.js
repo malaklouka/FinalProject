@@ -10,6 +10,7 @@ export const LIKE="LIKE"
 export const LIKE_BAG="LIKE_BAG"
 export const LIKE_BAG_SUCCESS="LIKE_BAG_SUCCESS"
 export const LIKE_BAG_FAIL="LIKE_BAG_FAIL"
+export const COMMENT_SUCCESS="COMMENT_SUCCESS"
 
 export const IS_ADDED="IS_ADDED"
 export const FETCH_BAGS = "FETCH_BAGS"

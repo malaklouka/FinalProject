@@ -32,9 +32,20 @@ import EditProfile from './Componenets/profile/EditProfile';
 import CustList from './Componenets/adminGestion/Allcust'
 import StoreList from './Componenets/adminGestion/Allstore';
 import Dashboard from './Componenets/dashAdmin/Dashboard';
-import Topbag from './Componenets/custbag/Topbag'
 import Qrcode from './Componenets/bags/Qrcode'
 import Contact from './Componenets/landing/Contact'
+import OurServices from './Componenets/landing/OurServices';
+import DarkModeToggle from './Componenets/Darkmode';
+import Topbags from './Componenets/custbag/Topbag';
+import Recommended from './Componenets/bags/recommended';
+import OrderListByAdminView from './views/OrderList';
+import CartView from './views/CartView';
+import OrderView from './views/OrderView';
+import PaymentView from './views/PaymentView';
+import PlaceOrderView from './views/PlaceOrderView';
+import ShippingView from './views/ShippingView';
+import MyList from './Componenets/testMydmd/listMydmd';
+import Tops from './Componenets/custbag/tops';
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -69,13 +80,22 @@ function App() {
 <Route path="/admin" component={CustList}/>
 <Route path="/storek" component={StoreList}/>
 <Route path='/dashadmin' component={Dashboard}/>
-<Route path='/topbags' component={Topbag}/>
+<Route path='/topbags' component={Tops}/>
 <Route path='/qrcode' component={Qrcode}/>
 <Route path='/contact' component={Contact}/>
+<Route path='/services' component={OurServices}/>
 
 
-{/*<Route path="/mydemande" component={ListDmd}/>*/}
 
+<Route path="/orderlist" component={OrderListByAdminView} />
+            <Route path="/cart/:id?" component={CartView} />
+            <Route path="/order/:id" component={OrderView} />
+            <Route path="/payment" component={PaymentView} />
+            <Route path="/placeorder" component={PlaceOrderView} />
+           
+            <Route path="/shipping" component={ShippingView} />
+
+<Route path="/mydemande" component={MyList}/>
 </Switch>
 <Footer/> 
 

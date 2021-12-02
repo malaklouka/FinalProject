@@ -76,7 +76,7 @@ setState({...bag})
   </div>
 </div>
      
-      <h3 className="editbag" style={{fontFamily:"Great Vibes", fontSize:"50px", marginLeft:"550px", color:"white"}}>Edit bag</h3>
+      <h3 className="editbag" style={{fontFamily:"Great Vibes", fontSize:"50px", marginLeft:"550px", color:"black"}}>Edit Bag</h3>
       {error && <h3 style={{color:"red"}}> {error}</h3>}
       <Form onSubmit={handleSubmit} >
       <Box

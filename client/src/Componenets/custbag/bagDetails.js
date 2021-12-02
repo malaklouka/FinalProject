@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Button, Card } from 'semantic-ui-react'
 import { useDispatch, useSelector } from "react-redux"
-import { deletebag, editBag,getOnebag, reservtBag,reserve } from '../../JS/actions/bag'
+import { deletebag, editBag,getOnebag, reservtBag,reserve, addComment, getbags } from '../../JS/actions/bag'
 import {addnewd} from '../../JS/actions/demandes'
 import {likePost} from '../../JS/actions/user'
 import Flippy, { FrontSide, BackSide } from 'react-flippy'
@@ -11,19 +11,28 @@ import '../bags/testbag.css'
 import { Link, useHistory } from 'react-router-dom'
 import Loader from '../spinneer'
 import { AiOutlineDelete,AiOutlineEdit,AiOutlineLike,AiTwotoneHeart,AiOutlineHeart } from "react-icons/ai";
-import { FaDollarSign, FaThumbsUp, FaEye } from 'react-icons/fa';
+import { FaDollarSign, FaThumbsUp, FaEye,FaOpencart } from 'react-icons/fa';
 
 
 import moment from 'moment';
 import Carousel from 'react-material-ui-carousel';
 import CarouselSlide from 'react-material-ui-carousel';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
+
 
 const BagDetails = ({bag}) => { 
     const [search, setSearch] = useState();
+    const [text, setText] = useState("");
+
     const dispatch = useDispatch();
     const loading = useSelector(
       (state) => state.bagReducer.isLoading
     );
+    const user=useSelector((state)=>state.userReducer.user)
+  {/*
     const [availibiltyDate, setAvailibiltyDate]=  useState("availibiltyDate")
     const [timerDays, setTimerDays] = useState('00');
     const [timerHours, setTimerHours] = useState('00');
@@ -63,19 +72,23 @@ const BagDetails = ({bag}) => {
         clearInterval(interval.current);
       };
     });
-    
-    {/*const calculateTimeLeft = () => {
+  */}
+    const calculateTimeLeft = () => {
       let eventTime = moment(bag.availibiltyDate).valueOf();
-      console.log(eventTime)
-      let currentTime = (Math.floor(Date.now() / 1000)).toString();
-      let leftTime = eventTime - currentTime;
+      let currentTime = (Math.floor(Date.now() / 1000)).valueOf();
+
+      let leftTime = (eventTime - currentTime);
+
       let duration = moment.duration(leftTime, 'seconds');
+      console.log(duration)
+
       let interval = 1000;
       if (duration.asSeconds() <= 0) {
           clearInterval(interval);
       }
       duration = moment.duration(duration.asSeconds() - 1, 'seconds');
-      return (duration.days() + ' Days ' + duration.hours()+ ' Hours ' + duration.minutes()+ ' Minutes ' + duration.seconds() + ' Seconds');
+      return (duration.hours()+ ' Hours ' + duration.minutes()+ ' Minutes ' + duration.seconds() + ' Seconds');
+    
   }
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
@@ -84,14 +97,41 @@ const BagDetails = ({bag}) => {
       setTimeout(() => {
           setTimeLeft(calculateTimeLeft());
       },1000);
-  });*/}
+  });
+
+  
+  
+
+
+
     const like = async (e) => {
       e.preventDefault();
      dispatch(likePost(bag._id));
     }
  // const bagtoshow = useSelector((state) => state.bagReducer.bags)
 
- 
+ const handleComment = (e) => {
+  e.preventDefault();
+
+  if (text) {
+    dispatch(addComment(bag._id, user._id, text, ))
+      .then(() => dispatch(getbags()))
+      .then(() => setText(''));
+  }
+};
+
+const handleChange = () => {
+  if (bag.isReserved) {
+    return toast.warning("demande is already reserved ");
+  } else {
+    const confirmBox = window.confirm("Are You sure to reserve this demande?");
+    if (confirmBox) {
+      return dispatch((addnewd(bag._id)));
+    
+    }
+  }
+}; 
+
  const history=useHistory();
 
     return  (
@@ -104,10 +144,10 @@ const BagDetails = ({bag}) => {
   <div className="detcontent">
   <Carousel  autoPlay={false} style={{height : "150px",width : "50%"}}>
              <CarouselSlide>
-                     {bag.image.map((img) => (
+                     {bag.image.map((img) => {
 
 <img src={img} className="img-responsive"  alt="bag"width="220" height="190" style={{marginLeft:-25,marginTop:-45}} />
-                ))}
+})}
                 </CarouselSlide>
             </Carousel>
 {/*
@@ -133,25 +173,45 @@ const BagDetails = ({bag}) => {
 	</Carousel>*/}
 
     <h2 className="nameb" style={{color:"black"}}>{bag.namebag}</h2>
-    <div>{timerDays}:{timerHours}:{timerMinutes}:{timerSeconds}</div>
+    <div>{timeLeft}</div>
     <h6 style={{color:"black"}}>{bag.price}dt instead of {bag.pricebefore}dt </h6>
     <h6 style={{color:"#0A775F"}}> Adresse:{bag.adresse}</h6>
    <h6 style={{color:"red"}}>published by: {bag.storekeeper}</h6>
+   {bag.comments.map((comment) => (
+   <h6> {comment.text}</h6>
 
-    <h6 style={{color:"white"}}>expired at : {moment(bag.expirationDate).format('DD/MM/YYYY')} </h6>
+                ))}
+
+
+
+    <h6 style={{color:"white"}}>expired at : {bag.expirationDate} </h6>
+    <h6 style={{color:"white"}}>availibilty : {bag.availibiltyDate}</h6>
+
           
     <div className="likes">
     <button onClick={like} className="likebtn" style={{ background:"none", border:"none"}}>
        <AiTwotoneHeart style={{fontSize:'20px', color:"red"}}/>     {bag.likes && bag.likes.length } 
 </button>
-<div className='ui two buttons' >
-<Link to='/mydemande'>
+{/**comments  */}
+{/*
+ <form onSubmit={handleComment} className="comment">
+          <input
+            type="text"
+            name="text"
+            onChange={(e) => setText(e.target.value)}
+            value={text}
+            placeholder="commment"
+          />
+          <br />
+          <input type="submit" value="Send" />
+        </form>
+*/}
 
-          <Button style={{ background:"none", border:"none"}} onClick={()=>
-            dispatch(addnewd({bag:bag._id,price:bag.price,quantity:bag.quantity}))}>
-            Reserver
+<div className='ui two buttons' >
+          <Button style={{ background:"none", border:"none", color:"black"}} onClick={()=>handleChange(bag._id)}
+         >
+        <FaOpencart/>    Reserver
           </Button>
-          </Link>
           <Button style={{ color:"blue", background:"none", border:"none"}} onClick={()=>history.push(`/bagdetail/${bag._id}`)}>
           <FaEye/>View </Button>
          </div>

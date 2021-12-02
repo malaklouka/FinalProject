@@ -8,6 +8,8 @@ import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core/
 import moment from 'moment';
 import { Icon, Card } from 'antd';
 import OneBag from "./bags/Bag";
+import {FaMapMarkerAlt} from "react-icons/fa"
+
 
 
 

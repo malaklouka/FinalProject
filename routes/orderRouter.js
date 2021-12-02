@@ -1,4 +1,4 @@
-{/*const express=require('express')
+const express=require('express')
 const orderRouter = express.Router();
 
 const Order = require('../models/orderModel');
@@ -6,7 +6,18 @@ const {isCust}=require('../middleware/isCust')
 const isAuth=require('../middleware/passport')
 const {isStorek}=require('../middleware/isStorek')
 const {isAdmin}= require('../middleware/admin')
+const controllers=require('../controllers/bagorder')
+orderRouter.post('/addorder',isAuth(),controllers.addOrderItems)
 
+orderRouter.get('/allorder',isAuth(),controllers.getAllOrders)
+orderRouter.get('/:id',isAuth(),controllers.getOrderById)
+
+orderRouter.get('/mine/orders',isAuth(),controllers.getOrderHistory)
+
+orderRouter.put('/payed/:id',isAuth(),controllers.updateOrderToPaid)
+
+orderRouter.put('/:id/delivered',isAuth(),controllers.updateOrderToDelivered)
+{/*
 orderRouter.get('/mine',isAuth,async (req,res) => {
     const order =await  Order.find({user: req.user._id});
     res.send(order);
@@ -84,8 +95,8 @@ orderRouter.put('/:id/deliver',isAuth(), isAdmin,async (req, res) => {
         res.status(404).send({ message: 'Order Not Found' });
     }
     })
-
+*/}
     module.exports=orderRouter
 
 
-  */}
+  

@@ -59,12 +59,11 @@ const bagSchema= new mongoose.Schema({
     },
     
     expirationDate:{
-        type:Date,
+       type: String,
 
     },
     availibiltyDate:{
-        type:Date,
-    },
+      type: String, expires: "1d" },
    
     reviews: [reviewsSchema],
     rating: {
@@ -84,6 +83,10 @@ const bagSchema= new mongoose.Schema({
           },
       },
   ],
+  comments: [{
+    text: String,
+    postedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+}],
     numReviews: {
       type: Number,
       required: true,

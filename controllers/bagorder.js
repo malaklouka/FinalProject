@@ -1,38 +1,118 @@
 const Order =require( '../models/orderModel')
-
+const user=require('../models/user')
 const addOrderItems = (async (req, res) => {
   const {
-    numItems,
-    isAccepted
+    orderItems,
+    shippingAddress,
+    paymentMethod,
+    itemsPrice,
+    taxPrice,
+    shippingPrice,
+    totalPrice,
   } = req.body
-  if (numItems && numItems.length === 0) {
+
+  if (orderItems && orderItems.length === 0) {
     res.status(400)
-    throw new Error('No order found')
-    
+    throw new Error('No order items')
+    return
   } else {
     const order = new Order({
-        numItems,
-      isAccepted
+      orderItems,
+      user: req.user._id,
+      shippingAddress,
+      paymentMethod,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
     })
     const createdOrder = await order.save()
-    res.status(201).send(createdOrder)
+
+    res.status(201).json(createdOrder)
   }
 })
+
+const getAllOrders = (async (req, res) => {
+  const orders = await Order.find({}).populate('user','name');
+  res.json(orders);
+});
 
 
 const getOrderById = (async (req, res) => {
-  const order = await Order.findById(req.params.id).populate('user','name email')
+  // Destructor from request body
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  );
 
   if (order) {
-    res.send(order)
+    res.json(order);
   } else {
-    res.status(404)
-    throw new Error('Order not found')
+    res.status(404);
+    throw new Error('Order not found');
   }
-})
+});
+
+
+const getOrderHistory = (async (req, res) => {
+  const orders = await Order.find({ user: req.user });
+  console.log(orders);
+  res.json(orders);
+});
+///// change the status of order : deleivered/ paid
+//status of order => paid
+
+
+const updateOrderToPaid = (async (req, res) => {
+
+  console.log('In update Order to paid controller');
+  console.log(req.params.id);
+  const order = await Order.findById(req.params.id);
+  console.log(order);
+
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.paymentResult = {
+      id: req.body.id,
+      status: req.body.status,
+      update_time: req.body.update_time,
+      email_address: req.body.email_address,
+    };
+    const updatedOrder = await order.save();
+
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+
+  const updatedOrder = await order.save();
+  res.json(updatedOrder);
+});
+
+
+
+const updateOrderToDelivered = (async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    const updatedOrder = await order.save();
+
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
+
 
 //a verifier
-const getMyOrders = (async (req, res) => {
+/*const getMyOrders = (async (req, res) => {
   const orders = await Order.find({})
   res.send(orders)
 })
@@ -41,7 +121,7 @@ const getMyOrders = (async (req, res) => {
 const getOrders = (async (req, res) => {
   const orders = await Order.find({}).populate('user', 'id name')
   res.send(orders)
-})
+})*/
 //edit order
 //middelware
 /*const UpdateOrderToDelivered = (async (req, res) => {
@@ -62,7 +142,9 @@ const getOrders = (async (req, res) => {
 
 module.exports= {
   addOrderItems,
+  getAllOrders,
   getOrderById,
-  getMyOrders,
-  getOrders,
+  getOrderHistory,
+  updateOrderToPaid,
+  updateOrderToDelivered
 }

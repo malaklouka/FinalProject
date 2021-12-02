@@ -10,6 +10,8 @@ import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
+import GoogleLogin from 'react-google-login';
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -25,7 +27,11 @@ const Signup = () => {
   const [gender,setGender]=useState("")
   
 
-
+  const [loginData, setLoginData] = useState(
+    localStorage.getItem('loginData')
+      ? JSON.parse(localStorage.getItem('loginData'))
+      : null
+  );
   const dispatch = useDispatch()
 const history=useHistory()
 const handleChanges = (event) => {
@@ -42,12 +48,37 @@ const handleChange=(e)=>{
   let {name,value}=e.target
   setDateofbirth({...dateofbirth,[name]:value})
 }
+const handleLogin = async (googleData) => {
+  const res = await fetch('/api/google-login', {
+    method: 'POST',
+    body: JSON.stringify({
+      token: googleData.tokenId,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const data = await res.json();
+  setLoginData(data);
+  localStorage.setItem('loginData', JSON.stringify(data));
+  history.push('/custdashboard')
+};
+
+const handleFailure=(result)=>{
+  alert(result)
+}
+
+const handleLogout = () => {
+  localStorage.removeItem('loginData');
+  setLoginData(null);
+};
     return (
       <div className="logincontent">
        <div class="text-box">
                   <h1 class="heading-primary">
                    <span class="heading-primary-main">Welcome to </span>
-                    <span class="heading-primary-sub">our site web !</span>
+                    <span class="heading-primary-sub">Just Good Of Waste!</span>
                    </h1>
              </div>
 
@@ -77,8 +108,12 @@ const handleChange=(e)=>{
               <input id="pass" type="password" className="input" data-type="password"
                onChange={(e)=>setPassword(e.target.value)}  />
             </div>
+            <div className="group">
+              <label htmlFor="adress" className="label"style={{color:"black"}}>Adresse</label>
+              <input id="adresse" type="text" className="input"
+               onChange={(e)=>setAdresse(e.target.value)}  />
+            </div>
             <div className="rolechoosen">
-                      <label >gender</label>
                       <select
                              onChange={(e)=>setGender(e.target.value)} >                 
                        <option value="">gender</option>
@@ -100,7 +135,6 @@ const handleChange=(e)=>{
     </LocalizationProvider>
         </div>*/}
             <div className="rolechoos">
-                      <label >Choose Your Role</label>
                       <select
                              onChange={(e)=>setRole(e.target.value)} >                 
                        <option value="">Role</option>
@@ -113,7 +147,7 @@ const handleChange=(e)=>{
 
             <div className="group">
               <input type="submit" className="button" defaultValue="Sign In"
-               onClick={()=>dispatch(registerUser({name,email,password,role,gender,dateofbirth},history))}/>
+               onClick={()=>dispatch(registerUser({name,email,password,role,adresse,gender,dateofbirth},history))}/>
             </div>
             <div className="hr" />
             <div className="foot-lnk">
@@ -150,7 +184,29 @@ const handleChange=(e)=>{
               onClick={()=>dispatch(loginUser({email,password},history))} 
  
               />
+              
+            <div className="hr" />
+            <div className="foot-lnk">
 
+                 
+            </div>
+
+ <div>
+          {loginData ? (
+            <div>
+{ /*             <h3>You logged in as {loginData.email}</h3>
+*/}              <button onClick={handleLogout}>Logout</button>
+            </div>
+          ) : (
+            <GoogleLogin
+              clientId="108453978309-svtn1f48j3g7i01lmrlnc84pcb6qqvrg.apps.googleusercontent.com"
+              buttonText="Log in with Google"
+              onSuccess={handleLogin}
+              onFailure={handleFailure}
+              cookiePolicy={'single_host_origin'}
+            ></GoogleLogin>
+          )}
+        </div>
 
             </div>
 

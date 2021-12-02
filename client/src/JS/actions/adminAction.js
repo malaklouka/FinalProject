@@ -80,7 +80,7 @@ import {
     };
     try {
       const result = await axios.get("/admin/allstorek/num", config);
-      dispatch({ type: GET_NB_STORE, payload: result.stores });
+      dispatch({ type: GET_NB_STORE, payload: result.data.storek });
     } catch (error) {
       dispatch({ type: FAILED_USER, payload: error });
     }
@@ -95,7 +95,7 @@ import {
     };
     try {
       const result = await axios.get("/admin/allCust/num", config);
-      dispatch({ type: GET_NB_CUST, payload: result.custs});
+      dispatch({ type: GET_NB_CUST, payload: result.data.cust});
     } catch (error) {
       dispatch({ type: FAILED_USER, payload: error});
     }

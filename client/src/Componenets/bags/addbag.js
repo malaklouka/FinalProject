@@ -144,7 +144,7 @@ history.push('/bags')
     <span class="arrow-part-3"></span>
   </div>
 </div>
-      <h6 className="add"style={{marginLeft:"550px", marginTop:"5",fontSize:"40px"}}>Add New Bag</h6>
+      <h6 className="add"style={{marginLeft:"550px", marginTop:"5",fontSize:"40px",  fontFamily: "Great Vibes"}}>Add New Bag</h6>
       {error && <h3 style={{color:"red"}}> {error}</h3>}
       <div>
         
@@ -258,10 +258,10 @@ history.push('/bags')
 
 </Box>         
 
-        <Form.Field 
+        <Form.Field
           id="form-button-control-public"
           control={Button}
-          content="ADD +" 
+          content="ADD " 
           onChange={handleChange}
 
         />

@@ -1,41 +1,70 @@
 const mongoose = require('mongoose');
 
-const orderSchema = new mongoose.Schema(
+const orderSchema = mongoose.Schema(
     {
-        orderItems:[
-            {
-                name: {type: String, required: true},
-                quntity: {type: Number, require: true},
-                image: { type: String, require: true},
-                address: {type: String, required: true},
-                bag: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'Bag',
-                    required: true,
-                },
-            },
-        ],
-        shippingAddress: {
-            fullName: {type: String, required:true },
-            address: {type: String, required:true },
-            city: {type: String, required:true },
-            pinCode: {type: Number, required:true },
-            country: {type: String, required:true },
-        },
-        user: {
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'User',
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: User,
+      },
+      orderItems: [
+        {
+          name: { type: String, required: true },
+          qty: { type: Number, required: true },
+          image: { type: String,},
+          price: { type: Number, required: true },
+          bag: {
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
+            ref: 'Bag',
+          },
         },
-        seller: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
-        isRequested: {type: Boolean, default: false,},
-        isDelivered: {type: Boolean, default: false,},
-        deliveredAt: {type: Date},
+      ],
+      shippingAddress: {
+        address: { type: String,},
+        city: { type: String, },
+        postalCode: { type: String, },
+        country: { type: String,  },
+      },
+      paymentMethod: {
+        type: String,
+      },
+      paymentResult: {
+        id: { type: String },
+        status: { type: String },
+        update_time: { type: String },
+        email_address: { type: String },
+      },
+      taxPrice: {
+        type: Number,
+        default: 0.0,
+      },
+      shippingPrice: {
+        type: Number,
+        default: 0.0,
+      },
+      totalPrice: {
+        type: Number,
+        default: 0.0,
+      },
+      isPaid: {
+        type: Boolean,
+        default: false,
+      },
+      paidAt: {
+        type: Date,
+      },
+      isDelivered: {
+        type: Boolean,
+        default: false,
+      },
+      deliveredAt: {
+        type: Date,
+      },
     },
     {
-        timestamps: true,
+      timestamps: true,
     }
-);
-
+  );
 module.exports = mongoose.model('Order', orderSchema);
 

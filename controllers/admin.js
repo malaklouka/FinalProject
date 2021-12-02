@@ -24,8 +24,9 @@ exports.BannUser = async (req, res) => {
 
 exports.getAllCust = async (req, res) => {
   try {
+    const numCust= await User.count({role: "customer"})
     const cust = await User.find({ role: "customer" })
-    res.send({ msg: "cust succ", cust });
+    res.status(200).send({ msg: "cust succ", cust, numCust });
  
   } catch (error) {
     res.status(400).send({ errors: [{ msg: "can not get the currentUser" }] });
@@ -65,8 +66,11 @@ exports.deleteUser = async (req, res) => {
 };
 exports.AllStorek = async (req, res) => {
   try {
+    const numStore= await User.count({role: "storekeeper"})
     const storek = await User.find({ role: "storekeeper" });
-    res.send({ msg: "getting succ", storek });
+    res.status(200).send({ msg: "getting succ", storek, numStore });
+
+
   } catch (error) {
     res.status(400).send({ errors: [{ msg: "can not get the currentUser" }] });
   }

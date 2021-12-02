@@ -29,12 +29,7 @@ const BagListC= () => {
         dispatch(getbags())
     }, [])
     
-   useEffect(() => {
-        FetchData(1);
-      }, []);
-      const FetchData = (page = 1) => {
-        dispatch(getbags(page));
-      };
+  
     
     return (
         <div>

@@ -22,7 +22,7 @@ const PieChartScreen = () => {
         gradient1.addColorStop(1, '#B7F8DB');
 
         return {
-            labels: ['Confirmed', 'Deaths'],
+            labels: ['Wasted', 'Selled'],
             datasets:[
                 {
                 label: 'Data',

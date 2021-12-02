@@ -9,13 +9,8 @@ import { getNBcust } from '../../../JS/actions/adminAction';
 
 const Main = () => {
     const user = useSelector(state => state.userReducer.user);
-    const nbcust=useSelector(state => state.userReducer.custs)
+    const numcust=useSelector(state => state.userReducer.custs)
     const dispatch = useDispatch()
- { /*  useEffect(() => {
-   
-      dispatch(getNBcust());
-
-  }, [dispatch]);*/}
 
   return (
     <main>

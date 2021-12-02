@@ -34,8 +34,7 @@ const {CLIENT_URL} = process.env */}
 
 
 exports.register = async (req, res) => {
-    const {name, surname,email,password,gender,adresse,dateofbirth,role}=req.body
-    const avatar= req.file.originalname
+    const {name, surname,email,password,gender,adresse,dateofbirth,avatar,role}=req.body
       try {
            const newUser= new User({name, surname,email,password,gender,adresse,dateofbirth,avatar,role})
    //check exist email

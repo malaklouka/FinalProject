@@ -20,6 +20,7 @@ import CarouselSlide from 'react-material-ui-carousel';
 
 
 const OneBag = ({bag}) => { 
+  
     const dispatch = useDispatch()
     const history= useHistory()
    {/*  useEffect(() => {
@@ -82,6 +83,7 @@ const OneBag = ({bag}) => {
                           <ul>
                             <li style={{color:"white"}}><span> Adresse: </span>{bag.adresse}</li>
                             <li style={{color:"white"}}> <span>published by:</span> {bag.storekeeper}</li>
+                            <li> <span>{bag.comments.text}</span></li>
            <li style={{color:"white"}}><span style={{color:"red", fontSize:"20px"}}>expired at : </span>{moment(bag.expirationDate).format('DD/MM/YYYY')}</li> 
           
                           </ul>

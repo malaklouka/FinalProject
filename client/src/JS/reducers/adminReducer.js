@@ -5,7 +5,9 @@ const initialState={
     loadUser:false,
     errors:null,
 custs:null,
-stores:null}
+stores:null,
+nbCust:null,
+nbStore:null}
 export const adminReducer=(state=initialState,{type,payload})=>{
     switch (type) {
         case LOADING_USER:
@@ -14,21 +16,19 @@ export const adminReducer=(state=initialState,{type,payload})=>{
             }
 
         case GET_ALL_CUST:
-    localStorage.setItem("token",payload.token)
-    return {...state,loadUser:false,users:payload.users}
+    return {...state,loadUser:false,custs:payload}
 
         case GET_ALL_STORE:
-    localStorage.setItem("token",payload.token)
-    return {...state,loadUser:false,users:payload.users}
+    return {...state,loadUser:false,stores:payload}
 
     case GET_NB_CUST:
-        localStorage.setItem("token",payload.token)
-        return {...state,loadUser:false,users:payload.custs}
-
-            case GET_NB_STORE:
-        localStorage.setItem("token",payload.token)
-        return {...state,loadUser:false,users:payload.stores}
-
+        return {...state,loadUser:false,nbCust:payload.cust}
+    
+        case GET_NB_STORE:
+            return {...state,loadUser:false,nbStore:payload.storek}
+        
+             
+ 
          case FAILED_USER:
           return {...state,loadUser:false,errors:payload}
 

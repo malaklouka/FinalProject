@@ -1,7 +1,8 @@
-import {LOAD_BAGS,GET_BAGS_SUCCESS,GET_BAGS_FAIL,DELETE_BAG,IS_RESERVED,LIKE, FETCH_BAGS, FILTER_BAGS_BY_ADRESSE, IS_ADDED} from "../const/bag"
+import {LOAD_BAGS,GET_BAGS_SUCCESS,GET_BAGS_FAIL,DELETE_BAG,IS_RESERVED,LIKE, FETCH_BAGS, FILTER_BAGS_BY_ADRESSE, IS_ADDED, COMMENT_SUCCESS} from "../const/bag"
 import axios from "axios"
 import { GET_ORDERS_SUCCESS, LOAD_ORDERS } from "../const/order"
 import { addDmnd, getdemandes, getmyD } from "./demandes"
+import { TOP_SUCCESS } from "../const/topConst"
 //get all bags: cust get all the bags + storek get all bags too
   export const getbags = () => async (dispatch) => {
     dispatch({ type: LOAD_BAGS })
@@ -53,7 +54,20 @@ console.log(response.data)
 };
 */}
 
-
+export const topbag=()=>async(dispatch)=>{
+  try {
+    const config = {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    const response=await axios.get("aa/bag/top",config)
+    dispatch({type: TOP_SUCCESS, payload: response.data });
+ 
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
 
@@ -91,7 +105,6 @@ console.log(response.data)
     try {
       const reservedbag= await axios.patch(`/aa/${id}/status`)
       dispatch ({type:IS_RESERVED, payload:reservedbag.data})
-      dispatch(getdemandes() )
     } catch (error) {
       console.log(error)
       
@@ -178,7 +191,6 @@ export const reservtBag=(id)=>async (dispatch)=>{
   try {
     const response= await axios.patch(`aa/${id}/status`)
     dispatch ({type: IS_RESERVED, payload: response.data})
-    dispatch(addDmnd())
   } catch (error) {
     console.log(error)
   }
@@ -219,17 +231,21 @@ export const filterBags = (adresse)=>async(dispatch)=>{
   }
   
 
-  export const topbag=()=>async(dispatch)=>{
+
+
+
+//send comments
+  export const addComment = (id,bag, text)=>async dispatch=>{
     try {
       const config = {
         headers: {
           authorization: localStorage.getItem("token"),
         },
       };
-      const response=await axios.get("aa/bag/top",config)
-      dispatch({ payload: response.data });
-   
+        const response=await axios.patch(`/aa/comment/${id}`,id,bag,text,config)
+        dispatch({ type: COMMENT_SUCCESS, payload: response.data.comments})
     } catch (error) {
-      console.log(error)
+        console.dir(error)
     }
-  }
+    }
+  

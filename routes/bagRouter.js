@@ -10,7 +10,7 @@ const multer=require('multer')
 
 const storage= multer.diskStorage({
   destination:function(req,file,callback){
-    callback(null,"uploads/")
+    callback(null,"./clients/public/uploads/")
   }, 
   filename:function(req,file, callback){
     callback(null, file.originalname)
@@ -35,13 +35,10 @@ const upload=multer({storage:storage})
 
 //get all bags
 bagRouter.get('/',isAuth(),async(req,res)=>{
-  const {page}=req.query
 try {
-  const LIMIT=8
-  const startIndex=(Number(page)-1)*LIMIT
-  const total= await Bag.countDocuments({})
+ 
     const bags= await Bag.find().populate({path:"id_storekeeper",select: 'name'})
-    res.send({bags, currentPage:Number(page),numberOfPages:Math.ceil(total/LIMIT),msg:"all the bags "})
+    res.send({bags,msg:"all the bags "})
 } catch (error) {
     console.log(error)
     res.status(401).send({msg:"error while getting all bags"})
@@ -98,17 +95,17 @@ bagRouter.get('/:id',isAuth(),async(req,res)=>{
   }
   })
 //add new bag
-bagRouter.post('/bags', upload.array("image",7),isAuth(),isStorek,async(req,res)=>{
+bagRouter.post('/bags', isAuth(),isStorek,async(req,res)=>{
   const user = req.user;
 const bag=req.body
-{/*  const {namebag,description,adresse,rating,category,price,priceBefore,
-numProduct,expirationDate,availibilityDate,image,id_storekeeper}=req.body*/}
+
+ const {namebag,description,adresse,rating,category,price,priceBefore,
+numProduct,expirationDate,availibilityDate,image,storekeeper}=req.body
   //  const image=req.body.file.filename => err backend filename undefined
- { /*
+ 
   const newbag = new Bag({ namebag, description, adresse, rating, 
-    category,price,priceBefore,numProduct, image,expirationDate,availibilityDate,id_storekeeper: user
-  })*/}
-  const newbag = new Bag({ ...bag, storekeeper: req.user.name })
+    category,price,priceBefore,numProduct, image,expirationDate,availibilityDate,storekeeper: req.user.name
+  })
 
   try {
         
@@ -274,6 +271,56 @@ bagRouter.put("/current/like/:id", isAuth(),isCust, controllers.like);
 
 // UNLIKE BAG
 bagRouter.put("/current/unlike/:id", isAuth(),isCust, controllers.unlike);
+
+//comment Bag 
+bagRouter.patch('/comment/:id',isAuth(),isCust,(req,res)=>{
+ try {
+  return Bag.findByIdAndUpdate(
+    req.params.id,
+    {
+      $push: {
+        comments: {
+          text: req.body.text,
+          postedBy:req.user._id,
+          timestamp: new Date().getTime(),
+        },
+      },
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) return res.send(docs);
+      else return res.status(400).send(err);
+    }
+  );
+ } catch (error) {
+   res.status(400).send(error)
+ }
+})
+// delete comment
+bagRouter.patch('/deletecomment/:id',isAuth(),isCust,async (req, res) => {
+
+
+  try {
+    Bag.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: {
+          comments: {
+            _id: req.body._id,
+          },
+        },
+      },
+      { new: true },
+      (err, docs) => {
+        if (!err) return res.send(docs);
+        else return res.status(400).send(err);
+      }
+    );
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+})
+
 
 module.exports=bagRouter
   

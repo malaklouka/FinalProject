@@ -2,15 +2,15 @@ import {LOAD_PROFIL,GET_PROFIL_SUCCESS,GET_PROFIL_FAIL,UPDATE_PROFIL_SUCCESS,UPD
 
 import axios from 'axios'
 
-export const getProfil = () => async (dispatch) =>{
+export const getProfil = (id) => async (dispatch) =>{
     dispatch ({type:LOAD_PROFIL})
     try {
-        const opts={
+        const config={
             headers:{
               Authorization:localStorage.getItem('token')
             }
           }
-        const response = await axios.get("/store/profile",opts)
+        const response = await axios.get(`/store/profil/${id}`,config)
         console.log(response)
         dispatch({type:GET_PROFIL_SUCCESS, payload:response.data})
     } catch (error) {

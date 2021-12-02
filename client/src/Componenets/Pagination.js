@@ -1,4 +1,4 @@
-{/*import React, { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {Pagination , PaginationItem} from '@material-ui/lab'
 import useStyles from './styles'
 import {Link } from 'react-router-dom'
@@ -28,4 +28,3 @@ to={`/custbag?page=${item.page}`}/>
 }
 
 export default Paginate
-*/}

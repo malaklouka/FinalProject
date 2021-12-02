@@ -1,3 +1,5 @@
+const bagRouter = require("../routes/bagRouter")
+
 exports.getBags = async(req,res)=>{
     try {
         const result = await Bag.find()
@@ -64,7 +66,7 @@ exports.like = async (req, res) => {
         if(bag.likes.filter(like=> like.user.toString()=== req.user.id).length>0){
             return res.status(400).send({msg:'bag alreadyliked'});
         }
-        bag.likes.unshift({user:req.user.id}); //add the user on the beginnig
+        bag.likes.unshift({user:req.user.id}) //add the user on the beginnig
         await bag.save();
         res.status(200).send(bag.likes);
     } catch (error) {
@@ -87,3 +89,7 @@ exports.unlike = async (req,res) => {
         res.status(500).send({ errors: error });
     }
 };
+
+
+//comment
+

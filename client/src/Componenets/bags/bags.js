@@ -6,15 +6,28 @@ import OneBag from './Bag'
 import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import { Route, Switch } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
+
 import './bags.css'
 import Navbar from '../Navbar'
 import Loader from '../spinneer'
+import { Paper } from '@material-ui/core'
+import Paginate from '../Pagination'
+import useStyles from './styles';
+
 
 //list bag
-
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
 const BagList = () => {
     const BagsList = useSelector(state => state.bagReducer.bags)
   const isLoading = useSelector(state => state.bagReducer.isLoading)
+  const query = useQuery();
+  const classes = useStyles();
+
+
+  const page = query.get('page') || 1;
 
     
     const dispatch =useDispatch();
@@ -41,6 +54,9 @@ const BagList = () => {
 </Switch>      
         </div>
         </div>
+        <Paper className={classes.pagination} elevation={6}>
+                <Paginate page={page} />
+              </Paper>
         </div>
         
     )

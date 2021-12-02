@@ -12,9 +12,11 @@ import { logout } from "../../JS/actions/user";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import './header.css'
-import Darkmode from '../Darkmode'
-import DarkModeToggle from "react-dark-mode-toggle";
+import DarkModeToggle from '../Darkmode'
 import { MdOutlineExitToApp } from "react-icons/md";
+
+
+<DarkModeToggle />
 
 
 const Header = () => {
@@ -40,15 +42,10 @@ const Header = () => {
 	</div> 
   */}
         </NavLink>
-        <NavLink to="/contact">
-                 Contact
-                    </NavLink>
+       
         <>
-    { /*   <DarkModeToggle
-      onChange={setIsDarkMode}
-      checked={isDarkMode}
-      size={80}
-    />*/}  </>
+    {/*   <DarkModeToggle
+    /> */} </>
         <NavMenu>
           {!isAuth ? (
             <NavLink to='/' activeStyle>
@@ -58,12 +55,15 @@ const Header = () => {
            <> <NavLink to='/custbag' activeStyle>
               Bags
             </NavLink>
-            <NavLink to='/mesdemandes' activeStyle>
+            <NavLink to='/mydemande' activeStyle>
               My Demand
             </NavLink>
             <NavLink to='/profile' activeStyle>
             Profile
             </NavLink>
+            <NavLink to="/contact">
+                 Contact
+                    </NavLink>
             <NavBtn 
              onClick={()=>{dispatch(logout())
                 history.push('/')}}>
@@ -81,13 +81,16 @@ const Header = () => {
             <NavLink to='/profile' activeStyle>
             Profile
             </NavLink>
+            <NavBtn> <NavBtnLink to="/contact">
+                 Contact
+                    </NavBtnLink></NavBtn>
             <NavBtn 
              onClick={()=>{dispatch(logout())
                 history.push('/')}}>
             <NavBtnLink to='/'> Logout <MdOutlineExitToApp/></NavBtnLink>
           </NavBtn>
             </>
-          ):null}
+          ): null}
           {/* Second Nav */}
           {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
         </NavMenu>
@@ -98,6 +101,12 @@ const Header = () => {
           <NavBtn>
             <NavBtnLink to='/signup'>Sign Up</NavBtnLink>
           </NavBtn>
+          <NavBtn> <NavBtnLink to="/contact">
+                 Contact
+                    </NavBtnLink></NavBtn>
+                    <NavBtn> <NavBtnLink to="/services">
+                 Our Services
+                    </NavBtnLink></NavBtn>
           </>
         ) : (
          null

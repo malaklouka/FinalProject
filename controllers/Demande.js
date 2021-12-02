@@ -15,7 +15,7 @@ res.send({msg:"successfult added",user:finduser})
    res.status(400).send({error,msg:"error while demande"}) 
   }
 }*/}
-
+  
 
 {/*//get all the cust dmnd 
 exports.getDemandeCust = async (req, res) => {
@@ -47,7 +47,7 @@ exports.getOneD= async(req,res)=>{
 // GET ALL DMND
 exports.getDemande = async (req, res) => {
   try {
-    const alldemande = await Demande.find().exec()
+    const alldemande = await Demande.find().populate({path:'bag',select:'namebag price quantity'})
     res.status(200).send({ msg: "demande saved successfully", alldemande });
   } catch (error) {
     console.log(error);
@@ -56,15 +56,16 @@ exports.getDemande = async (req, res) => {
       .send({ errors: [{ msg: "can not add this demande", error }] });
   }
 };
-{/* //cust: add bag to mes dmnds
+ //cust: add bag to mes dmnds
 exports.addtoDemande = async (req, res) => {
   try {
-    const id_bag = req.body._id
+    const {bag,namebag,price,quantity} = req.body
     const { id_customer } = req.params
     
-    const newDemande = new Demande({   ...req.body, userId: req.user})
+    const newDemande = new Demande({   ...req.body, user: req.user})
 //verif if ag exist or not
-const existed=await Demande.findOne({id_bag})
+const existed=await Demande.findOne({bag}).populate({path:'bag', select:'namebag'}) 
+
 if (existed){
     return res.status(200).send({msg:"this bag already exist"})
 }
@@ -75,11 +76,11 @@ if (existed){
     console.log(error)
     res.status(400).send({ errors: [{ msg: "oops!! we cannot add this demande", error }] })
   }
-}*/}
-//get mydmnd 1*
+}
+//get mydmnd 1* 
 exports.getMyDmnd = async (req, res) => {
   try {
-    const demande = await Demande.find({ user: req.user })
+    const demande = await Demande.find({ user: req.user }).populate({path:"bag",select:"namebag price"})
   
     res.status(200).send({ msg: "success",  demande });
   } catch (err) {

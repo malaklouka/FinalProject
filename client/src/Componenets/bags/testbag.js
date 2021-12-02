@@ -15,6 +15,8 @@ import Topbag from '../custbag/Topbag'
 import { Link } from 'react-router-dom'
 
 import Box from '@mui/material/Box';
+import Tops from "../custbag/tops";
+import Topbags from "../custbag/Topbag";
 
 
 
@@ -40,26 +42,24 @@ dispatch(getbagId(id))
 
    
   return (
-    <div>
-    <div className="cardd transition">
-      <div>
-    <h5 className="transition">Bag's Details:</h5>
-    <h6 className="textt" style={{color:"red", fontSize:"100px"}}>{bag.namebag}</h6>
-    <p>{bag.description}</p>
-    <div className="cta-container transition"><a href="#" className="cta">
+  <div>
+  <div class="cardtop 1">
+    <div class="card_title title-white">
+    <h4 style={{color:"green"}}>{bag.namebag}</h4>
+    <h6 style={{color:"white", marginTop:20,fontSize:20}}>description: {bag.description}</h6> 
+    <h6 style={{marginTop:50}}>{bag.price}dt instead of {bag.pricebefore}dt </h6>
+    <div style={{marginTop:40}}>  
     <Link to='/mydemande'>
-          <Button style={{ background:"none", border:"none"}} onClick={()=>
+          <Button style={{ border:"none",color:"black"}} className="reservebtn" onClick={()=>
             dispatch(addtod({namebag:bag.namebag,price:bag.price,quantity:bag.quantity}))}>
             Reserver
           </Button>
-          </Link>
-          </a></div>
-    <div className="card_circle transition"></div>
+          </Link> 
+          </div>
+    </div>
   </div>
-</div>
-  {/**recommendations bags filter by aadress  */}
-  <Recommended/>
-  </div>
+  <Tops/>
+    </div>
   )}
      
     

@@ -1,0 +1,180 @@
+
+  .badge {
+    flex: none;
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 666px;
+    background-color: #6F5BEB;
+    border: 4px solid #fff;
+    box-sizing: content-box;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    animation: ribbon 0.15s ease-in-out;
+    position: relative;
+  }
+  .badge.is-hidden {
+    display: none;
+  }
+  .badge .ribbon {
+    width: 10px;
+    height: 15px;
+    display: block;
+    transform: rotate(30deg);
+    background-color: #6F5BEB;
+    z-index: -1;
+    position: absolute;
+    margin-top: 5px;
+    transform-origin: 0 0;
+    margin-left: 2px;
+    box-shadow: 2px 0 0 0 #fff;
+    visibility: hidden;
+  }
+  .badge .ribbon:not(.is-right) {
+    animation: ribbonLeft 0.2s linear;
+    animation-delay: 0.15s;
+    animation-fill-mode: forwards;
+  }
+  .badge .ribbon.is-right {
+    transform: rotate(-30deg);
+    margin-top: 10px;
+    margin-left: 1px;
+    z-index: -2;
+    box-shadow: none;
+    animation: ribbonRight 0.2s ease-in;
+    animation-delay: 0.35s;
+    animation-fill-mode: forwards;
+  }
+  .badge .ribbon:after, .badge .ribbon:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    bottom: - 5px;
+  }
+  .badge .ribbon:after {
+    border-width: 5px 5px 0 0;
+    border-color: #6F5BEB transparent transparent transparent;
+    left: 0;
+  }
+  .badge .ribbon:before {
+    border-width: 0 5px 5px 0;
+    border-color: transparent #6F5BEB transparent transparent;
+    right: 0;
+  }
+  .badge.is-lg {
+    width: 21.6px;
+    height: 21.6px;
+  }
+  .badge.is-lg .ribbon {
+    width: 18px;
+    height: 27px;
+    margin-top: 9px;
+    margin-left: 3.6px;
+  }
+  .badge.is-lg .ribbon.is-right {
+    margin-top: 18px;
+    margin-left: 1.8px;
+  }
+  .badge.is-lg .ribbon:after, .badge.is-lg .ribbon:before {
+    bottom: - 9px;
+  }
+  .badge.is-lg .ribbon:after {
+    border-width: 9px 9px 0 0;
+  }
+  .badge.is-lg .ribbon:before {
+    border-width: 0 9px 9px 0;
+  }
+  @keyframes ribbon {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  @keyframes ribbonLeft {
+    0% {
+      opacity: 0;
+      transform: rotate(30deg) translate3d(0, -75%, 0);
+    }
+    30% {
+      visibility: visible;
+    }
+    100% {
+      visibility: visible;
+      opacity: 1;
+      transform: rotate(30deg) translate3d(0, 0%, 0);
+    }
+  }
+  @keyframes ribbonRight {
+    0% {
+      opacity: 0;
+      transform: rotate(30deg) translate3d(-80%, -5px, 0);
+    }
+    50% {
+      opacity: 0;
+      visibility: visible;
+    }
+    100% {
+      visibility: visible;
+      opacity: 1;
+      transform: rotate(-30deg) translate3d(0%, 0%, 0);
+    }
+  }
+
+  /*
+  .card {
+    margin: 30px auto;
+    width: 300px;
+    height: 300px;
+    border-radius: 40px;
+    background-image: url('https://i.redd.it/b3esnz5ra34y.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-repeat: no-repeat;
+  box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+    transition: 0.4s;
+  }
+  */
+
+
+  .box {
+    border: 3px solid #ed1c23;
+    width: 400px;
+    height: 400px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url(http://www.bohus.no/vare/stoler/spisestoler/7053346011776_1.jpg);
+  }
+  .trapezium-badge {
+    display: block;
+    background-color: #ed1c23;
+    position: relative;
+    width: 147px;
+    height: 60px;
+    padding: 10px 14px;
+    line-height: 180%;
+  }
+  .trapezium-badge:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 0;
+    border-bottom: 50px solid transparent;
+    border-left: 146px solid #ed1c23;
+  }
+  .trapezium-badge .badge-text {
+    font-family: 'Permanent Marker';
+    color: #fff;
+    font-size: 30px;
+    position: relative;
+    z-index: 1;
+    display: block;
+    transform: rotate(-5deg);
+  }
+  

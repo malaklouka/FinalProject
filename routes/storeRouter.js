@@ -78,7 +78,7 @@ storeRouter.put('/editprofil/:id',isAuth(),async (req, res) => {
       //test adresse
       const { id } = req.params
       const userp= await User.findById(id)
-        res.send({userp,msg:"user successfully "})
+        res.status(200).send({userp,msg:"user successfully "})
     } catch (error) {
         console.log(error)
         res.status(401).send({msg:"error while getting one bag"})

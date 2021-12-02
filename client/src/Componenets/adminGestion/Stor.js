@@ -30,18 +30,26 @@ const Store = ({ store }) => {
       return dispatch(deleteUser(store._id));
     }
   };
-  // ------------------------------------------
   return (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3 m-3">
       {userr && userr.role == "admin" ? (
         <div className="our-team">
-          <div className="picture">
-            <img
-              className="img-fluid"
-              src="https://picsum.photos/130/130?image=1027"
-              alt="profile"
-            />
-          </div>
+          <div className="m-b-25">
+                      {store && store.gender == "female" ? (
+                        <img
+                          width="20%"
+                          src="https://cdn1.iconfinder.com/data/icons/avatar-11/76/5-512.png"
+                          className="img-radius"
+                          alt="femalechef"
+                        />
+                      ) : (
+                        <img
+                          src="https://img.icons8.com/bubbles/100/000000/user.png"
+                          className="img-radius"
+                          alt="User-Profile"
+                        />
+                      )}
+                    </div>
 
           <div className="team-content">
             <h3 className="name">{store.name}</h3>
@@ -58,13 +66,22 @@ const Store = ({ store }) => {
       ) : (
         <Link to={`/profile/${store._id}`}>
           <div className="our-team">
-            <div className="picture">
-              <img
-                className="img-fluid"
-                src="https://picsum.photos/130/130?image=1027"
-                alt="profile"
-              />
-            </div>
+          <div className="m-b-25">
+                      {store && store.gender == "female" ? (
+                        <img
+                          width="20%"
+                          src="https://cdn1.iconfinder.com/data/icons/avatar-11/76/5-512.png"
+                          className="img-radius"
+                          alt="femalechef"
+                        />
+                      ) : (
+                        <img
+                          src="https://img.icons8.com/bubbles/100/000000/user.png"
+                          className="img-radius"
+                          alt="User-Profile"
+                        />
+                      )}
+                    </div>
             <div className="team-content">
               <h3 className="name">{store.name}</h3>
               <h4 className="title">{store.lastName}</h4>

@@ -12,7 +12,6 @@ dayjs.extend(duration)
 const durationR=dayjs.duration(12, 'hours');
   
  const {createdAt,isReserved}=req.body
- var isReserved=true
 
  if(isReserved || createdAt>= durationR){
      res.status(200).send({message: " sorry this demand is deleted it passed 12h   ",isReserved});

@@ -6,10 +6,11 @@ const Demande=require('../models/Demande')
 const Bag =require('../models/bag')
 const { addtoDemande,addTo, addItems,getDemandeCust,getdmndbyid, getD,getOneD,acceptdmnd,getDemande,cancelDemande,getAcceptedDemande,acceptcustdmnd,getMyDmnd}=require("../controllers/Demande")
 const Dmndrouter = express.Router();
-const isAuth=require('../middleware/passport')
+const isAuth=require('../middleware/passport');
+const { isStorek } = require("../middleware/isStorek");
 Dmndrouter.get("/alldemande",getDemande)
 //Dmndrouter.get("/cust/alldemande", getDemandeCust)
-//Dmndrouter.post("/addtodmnd",isAuth(),addTo)
+Dmndrouter.post("/addtodmnd",isAuth(),addtoDemande)
 Dmndrouter.post('/additemsto',isAuth(),addItems)
 Dmndrouter.get('/d',isAuth(),getD)
 Dmndrouter.get('/oned',isAuth(),getOneD)
@@ -18,7 +19,9 @@ Dmndrouter.get('/oned',isAuth(),getOneD)
 //Dmndrouter.post("/addt",isAuth(), addtoDemande)
 Dmndrouter.delete("/cancel/:id",isAuth(),cancelDemande)
 Dmndrouter.get("/acc",isAuth(),getAcceptedDemande)
-Dmndrouter.patch("/accept/:id",isAuth(),acceptcustdmnd)
+//nzidou el middelware de storekeeper : only storekk can accept demand => it worksss
+Dmndrouter.patch("/accept/:id",isAuth(),isStorek,acceptcustdmnd)
+
 Dmndrouter.get("/mesdemandes",isAuth(),getMyDmnd)
 Dmndrouter.get("/:id",getdmndbyid) 
 //update isAccepted
@@ -47,6 +50,7 @@ Dmndrouter.post('/testadd', isAuth(), (req, res) => {
     const user = req.user;
     const item = {
       bag: req.body.bag,
+      
       quantity: req.body.quantity
     };
   
@@ -92,8 +96,7 @@ Dmndrouter.post('/testadd', isAuth(), (req, res) => {
       res.send(bag);
     });
   });
-*/}
-  Dmndrouter.put('/', isAuth(), (req, res) => {
+    Dmndrouter.put('/', isAuth(), (req, res) => {
     Cart.findById(req.body.cartId)
       .then((foundCart) => {
         foundCart.items = foundCart.items.filter((item) => item._id != req.body.itemId);
@@ -107,22 +110,31 @@ Dmndrouter.post('/testadd', isAuth(), (req, res) => {
       .then(() => res.end())
       .catch((err) => res.send(err));
   });
+*/}
+
 ///////////////////
   Dmndrouter.post('/test/add', isAuth(), async (req, res) => {
     try {
-      const { bag, isReserved } = req.body;
+      const { bag, isReserved,namebag,price } = req.body;
       const user = req.user;
       const update = {
         bag,
-        isReserved,
+        isReserved,namebag,
         updated: Date.now()
       };
-      const query = { bag: update.bag, user: user._id };
+      const query = { bag: update.bag,namebag:update.namebag, user: user._id };
   
       const updatedDemand = await Demande.findOneAndUpdate(query, update, {
         new: true
-      })
+      } ).populate({path:'bag', select:"namebag"}); 
   
+      //verif if ag exist or not
+const existed=await Demande.findOne({bag})
+
+if (existed){
+    return res.status(200).send({msg:"this bag already exist"})
+}
+
       if (updatedDemand !== null) { 
         res.status(200).send({
           success: true,
@@ -132,7 +144,7 @@ Dmndrouter.post('/testadd', isAuth(), (req, res) => {
       } else {
         const demand = new Demande({
           bag,
-          isReserved,
+          isReserved:!isReserved,
           user: user._id
         });
   
@@ -154,15 +166,11 @@ Dmndrouter.post('/testadd', isAuth(), (req, res) => {
   });
   
 // get dmnd list 
-Dmndrouter.get('/dmd/getthd', isAuth(), async (req, res) => {
+Dmndrouter.get('/dmd/getthd', isAuth(),isStorek, async (req, res) => {
   try {
-    const user = req.user._id;
 
-    const thedemand = await Demande.find({ user, isReserved: true })
-      .populate({
-        path: 'bag',
-        select: 'namebag price image'
-      }).sort('-updated');
+    const thedemand = await Demande.find().populate({path:'user',select:'name email adresse'})
+
 console.log(thedemand)
     res.status(200).send({
       thedemand

@@ -3,20 +3,27 @@ const mongoose = require('mongoose');
 const demandeSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: User
   },
  // expire: { type: Date, required: true, default: Date.now, expires: "1d" },
  bag: {
   type: mongoose.Schema.Types.ObjectId,
-  ref: 'Bag'
+  ref: Bag
 },
+
+
 quantity: {type: Number, default:1},
 price: {type:Number},
 isReserved:{type:Boolean,
 default:false}
-
+,
+  isAccepted:{
+    type:Boolean,
+    default:false
+  }
   
 },
+
 {timestamps:true}
 
 );

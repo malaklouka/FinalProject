@@ -3,7 +3,10 @@ import { LOAD_DMND,IS_ACCEPTED,ADD_TO_DMND_SUCCESS,ADD_TO_DMND_FAIL,GET_CUST_DMN
 from "../const/demandeConst"
 import axios from "axios"
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure();
 
 
 
@@ -17,8 +20,9 @@ export const addnewd=(newD)=>async (dispatch)=>{
       },
     };
     const response = await axios.post('/dmnd/test/add',newD,config)
+    toast.success('demand added with success ')
     console.log(response.data)
-    dispatch({ type: ADD_TO_DMND_SUCCESS, payload: response.data.demand})
+    dispatch({ type: ADD_TO_DMND_SUCCESS, payload: response.data})
     console.log(response.data)
 
   } catch (error) {
@@ -72,9 +76,14 @@ export const addDmnd=(newDemand)=>async (dispatch)=>{
 export const getdemandes=()=>async (dispatch)=>{
     dispatch({type: LOAD_DMND})
     try {
-        const response = await axios.get("/dmnd/d")
+      const config = {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      };
+        const response = await axios.get("/dmnd/dmd/getthd",config)
         console.log(response)
-        dispatch({type: GET_CUST_DMND_SUCCESS, payload:response.data.demds})
+        dispatch({type: GET_CUST_DMND_SUCCESS, payload:response.data.thedemand})
     } catch (error) {
       console.log(error)
         dispatch({type: GET_CUST_DMND_FAIL, payload:error})
@@ -135,7 +144,9 @@ export const getMydmnd=()=>async(dispatch)=>{
  console.log(response)
  dispatch({type:GET_MY_DMND_SUCCESS, payload:response.data.demande})
   } catch (err) {
-    dispatch({type: GET_CUST_DMND_FAIL,payload:EvalError})
+    console.dir(err)
+
+    dispatch({type: GET_MY_DMND_FAIL,payload:err})
   }
 }
 //edit order : annuler l'order

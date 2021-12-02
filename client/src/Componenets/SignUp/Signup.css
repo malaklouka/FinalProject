@@ -1,6 +1,6 @@
 
   .text-box {
-	height:250px;
+	height:350px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -23,7 +23,7 @@
   }
   
   .heading-primary {
-	  color:#49705d;
+	  color:black;
 	  text-transform: uppercase;
   }
   
@@ -196,7 +196,7 @@ h1 {
 	width:50%;
 	margin:10px;
 	max-width:380px;
-	min-height:550px;
+	min-height:750px;
 	color: #022215;
 	position:relative;
 	background-color: #ffffff10;
@@ -270,7 +270,7 @@ h1 {
 	padding:15px 20px;
 	border-radius: 24px 4px;
 	border-color: violet;
-	background:#94b8a6;
+	background:#cd0dfd1f;
 }
 .login-form .group input[data-type="password"]{
 	text-security:circle;
