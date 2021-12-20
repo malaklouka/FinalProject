@@ -10,7 +10,7 @@ import useStyles from '../styles';
 import ImageSlider from '../../pages/images'
 import Recommended from './recommended'
 import './view.css'
-import {addtod,addtoDemande,addDmnd} from '../../JS/actions/demandes'
+import {addtod,addtoDemande,addDmnd, addnewd} from '../../JS/actions/demandes'
 import Topbag from '../custbag/Topbag'
 import { Link } from 'react-router-dom'
 
@@ -51,7 +51,8 @@ dispatch(getbagId(id))
     <div style={{marginTop:40}}>  
     <Link to='/mydemande'>
           <Button style={{ border:"none",color:"black"}} className="reservebtn" onClick={()=>
-            dispatch(addtod({namebag:bag.namebag,price:bag.price,quantity:bag.quantity}))}>
+            dispatch(addnewd
+            (bag._id))}>
             Reserver
           </Button>
           </Link> 

@@ -33,7 +33,7 @@ const Header = () => {
       <Nav>
         <NavLink to='/'>
         <div className="cont">
-      <img src="/img/log.png" alt="logo" height="90" width="120"/>
+      <img src="/img/llog.png" alt="logo" height="120" width="150"/>
       </div>
      { /*  <div className="content">
       <img src="log.png" alt=""/>
