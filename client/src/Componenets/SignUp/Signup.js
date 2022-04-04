@@ -1,15 +1,8 @@
-import React,{useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import React,{ useState} from 'react'
+import {useDispatch} from 'react-redux'
 import { loginUser, registerUser } from '../../JS/actions/user'
 import {useHistory} from 'react-router-dom'
-import {Switch,Route,Link} from "react-router-dom"
 import "./Signup.css"
-import Signin from '../Signin/Signin'
-import { isAuthenticated } from '../../helpers/isauth';
-import TextField from "@mui/material/TextField";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
 import GoogleLogin from 'react-google-login';
 
 import { toast } from 'react-toastify';
@@ -22,7 +15,7 @@ const Signup = () => {
   const [email,setEmail]= useState("")
   const [password,setPassword]= useState("")
   const [role,setRole]= useState("")
-  const [dateofbirth,setDateofbirth]=useState("")
+  const [dateofbirth]=useState("")
   const [adresse,setAdresse]=useState("")
   const [gender,setGender]=useState("")
   
@@ -34,20 +27,7 @@ const Signup = () => {
   );
   const dispatch = useDispatch()
 const history=useHistory()
-const handleChanges = (event) => {
-  const {
-    target: { value },
-  } = event;
-  setDateofbirth(
-    // On autofill we get a the stringified value.
-    typeof value === 'string' ? value.split(',') : value,
-  );
-};
 
-const handleChange=(e)=>{
-  let {name,value}=e.target
-  setDateofbirth({...dateofbirth,[name]:value})
-}
 const handleLogin = async (googleData) => {
   const res = await fetch('/api/google-login', {
     method: 'POST',

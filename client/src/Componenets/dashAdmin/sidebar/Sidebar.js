@@ -1,12 +1,11 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import "./sidebar.css";
-import logo from "../assets/logo.png";
 import { NavBtn, NavBtnLink, NavLink } from "../../NavbarElements";
 import { MdOutlineExitToApp } from "react-icons/md";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { logout } from "../../../JS/actions/user";
-import { Link } from "react-router-dom";
 
 const Sidebar = ({ sidebarOpen, closeSidebar }) => {
     const dispatch = useDispatch();

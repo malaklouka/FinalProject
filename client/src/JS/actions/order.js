@@ -1,5 +1,5 @@
 //orders actions 
-import {LOAD_ORDERS,GET_ORDERS_SUCCESS,GET_ORDERS_FAIL,DELETE_ORDER,EDIT_ORDER, IS_ACCEPTED} 
+import {LOAD_ORDERS,GET_ORDERS_SUCCESS,GET_ORDERS_FAIL, IS_ACCEPTED} 
 from "../const/order"
 import axios from "axios"
 

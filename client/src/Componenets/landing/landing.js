@@ -1,10 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Carousel from 'react-bootstrap/Carousel';
-import Header from './header'
 import './aboutus.css'
-import { FaSearchLocation,FaLaughBeam,FaDove } from 'react-icons/fa';
-import * as emailjs from 'emailjs-com';
+import { FaSearchLocation,FaDove } from 'react-icons/fa';
 import Contact from "./Contact"
 
 
@@ -19,7 +17,7 @@ return (
 		<img
 			className="d-block w-100"
 src="https://images.unsplash.com/photo-1573518011645-aa7ab49d0aa6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-		alt="Image One"
+		alt="One"
 		/>
 		<Carousel.Caption>
 			<h3 style={{color:"black"}}>ANTI WASTE SITE WEB</h3>
@@ -30,7 +28,7 @@ src="https://images.unsplash.com/photo-1573518011645-aa7ab49d0aa6?ixlib=rb-1.2.1
 		<img
 			className="d-block w-100"
 src="https://images.unsplash.com/flagged/photo-1568004614679-c938da0922fb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=580&q=80"
-			alt="Image Two"
+			alt="Two"
 		/>
 		<Carousel.Caption>
 			<h3 style={{color:"black"}}>Save meals</h3>
@@ -40,7 +38,7 @@ src="https://images.unsplash.com/flagged/photo-1568004614679-c938da0922fb?ixid=M
     <img
 			className="d-block w-100"
 src="https://images.unsplash.com/photo-1534723452862-4c874018d66d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-			alt="Image Two"
+			alt="Two"
 		/>
     <Carousel.Caption>
 		
@@ -50,7 +48,7 @@ src="https://images.unsplash.com/photo-1534723452862-4c874018d66d?ixlib=rb-1.2.1
     <img
 			className="d-block w-100"
 src="https://images.unsplash.com/photo-1584953528649-b522a1b499b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-			alt="Image Two"
+			alt="Two"
 		/>
     <Carousel.Caption>
 		

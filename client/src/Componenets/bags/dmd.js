@@ -1,23 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Card, Image } from 'semantic-ui-react'
+import React, { useEffect } from 'react'
+import { Button } from 'semantic-ui-react'
 import { useDispatch } from "react-redux"
-import { addBag, deletebag, editBag,getbags,likePost} from '../../JS/actions/bag'
 import Flippy, { FrontSide, BackSide } from 'react-flippy'
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
-import { Link } from 'react-router-dom'
-import Add from './addbag'
-import { useHistory, useParams } from "react-router"
-import BasicAlerts from '../alert'
-import ImageSlider from '../../pages/images'
-import moment from 'moment';
 import { getdemandes } from '../../JS/actions/demandes'
 
 const Dmd = ({demande}) => { 
     const dispatch = useDispatch()
-    const history= useHistory()
      useEffect(() => {
       dispatch(getdemandes())
-         }, [])
+         }, [dispatch])
 
    
     return (

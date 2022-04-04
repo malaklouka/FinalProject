@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Form, Input, TextArea, Button } from "semantic-ui-react";
+import {  useHistory } from "react-router-dom";
+import { Form, Button } from "semantic-ui-react";
 import { addBag } from "../../JS/actions/bag";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import 'react-date-range/dist/styles.css'; 
 import 'react-date-range/dist/theme/default.css';
-import { Calendar } from 'react-date-range';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
@@ -75,10 +74,9 @@ const Add = () => {
 
     const [state, setState] = useState({namebag:"",  price:"",priceBefore:"", expirationDate:"",availibiltyDate:"",description:""})
     const [fileName,setFileName]= useState("")
-    const onChangeFile=e=>{ setFileName(e.target.files[0])}
     
     const {namebag,price,priceBefore,expirationDate,availibiltyDate}=state;
-    const [error,setError]=useState("")
+    const [error]=useState("")
 
     const [adresse, setAdress] = useState([]);
 
@@ -90,7 +88,7 @@ const Add = () => {
     formData.append("availibiltyDate",availibiltyDate)
     formData.append("image",fileName)
 
-    const [date, setDate] = useState(new Date());
+    const [date] = useState(new Date());
 
     const handleChange=(e)=>{
       let {name,value}=e.target

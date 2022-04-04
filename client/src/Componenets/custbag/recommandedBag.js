@@ -1,17 +1,14 @@
 import { Typography } from '@material-ui/core';
-import { getTypographyUtilityClass } from '@mui/material';
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import {  useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { Divider } from 'semantic-ui-react';
 import useStyles from '../styles';
 
 const RecommandedBag = () => {
     const { baggs,bag} = useSelector((state) => state.bagReducer.bags);
-    const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
-    const { id } = useParams();
     const recommendedBags = baggs.filter(({ _id }) => _id !== bag._id);
     const openPost = (_id) => history.push(`/bags/${_id}`);
 

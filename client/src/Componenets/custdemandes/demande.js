@@ -1,17 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Card, Image } from 'semantic-ui-react'
-import { useDispatch, useSelector } from "react-redux"
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
-import { Link } from 'react-router-dom'
-import { useHistory, useParams } from "react-router"
-import BasicAlerts from '../alert'
-import moment from 'moment';
-import Loader from '../spinneer'
-import Navbar from '../Navbar'
-
+import React from 'react'
+import { useSelector } from "react-redux"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Col, ListGroup, Row } from 'react-bootstrap'
 import Dlist from './list'
 
 toast.configure();
@@ -20,8 +10,7 @@ toast.configure();
 
 
 const OneDemande = () => { 
-    const dispatch = useDispatch()
-    const history= useHistory()
+ 
 
     const demand=useSelector(state=>state.demandeReducer.demandes)
     return (

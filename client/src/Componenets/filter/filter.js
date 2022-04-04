@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import Loader from '../spinneer';
 import { getNewBags } from '../../JS/actions/filterAction';
 import { getBagsByFilter } from '../../JS/actions/filterAction';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Filter = () => {
 	const dispatch = useDispatch();

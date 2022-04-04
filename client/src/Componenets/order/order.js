@@ -1,10 +1,8 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import OrderItem from "./OrderItem";
-import Spinner from "./Spinner";
 
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrder, getMyorders } from "../../JS/actions/order";
+import {  getMyorders } from "../../JS/actions/order";
 
 const Orders = () => {
 
@@ -12,7 +10,7 @@ const Orders = () => {
 const dispatch = useDispatch()
   useEffect(() => {
    dispatch( getMyorders());
-  }, []);
+  }, [dispatch]);
 
   
     return (

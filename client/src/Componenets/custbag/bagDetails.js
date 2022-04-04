@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Button, Card } from 'semantic-ui-react'
-import { useDispatch, useSelector } from "react-redux"
-import { deletebag, editBag,getOnebag, reservtBag,reserve, addComment, getbags } from '../../JS/actions/bag'
+/* eslint-disable array-callback-return */
+import React, { useState, useEffect } from 'react'
+import { Button } from 'semantic-ui-react'
+import { useDispatch } from "react-redux"
 import {addnewd} from '../../JS/actions/demandes'
 import {likePost} from '../../JS/actions/user'
-import Flippy, { FrontSide, BackSide } from 'react-flippy'
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
-
 import '../bags/testbag.css'
-import { Link, useHistory } from 'react-router-dom'
-import Loader from '../spinneer'
-import { AiOutlineDelete,AiOutlineEdit,AiOutlineLike,AiTwotoneHeart,AiOutlineHeart } from "react-icons/ai";
-import { FaDollarSign, FaThumbsUp, FaEye,FaOpencart } from 'react-icons/fa';
+import {  useHistory } from 'react-router-dom'
+import { AiTwotoneHeart } from "react-icons/ai";
+import {  FaEye,FaOpencart } from 'react-icons/fa';
 
 
 import moment from 'moment';
@@ -24,55 +20,10 @@ toast.configure();
 
 
 const BagDetails = ({bag}) => { 
-    const [search, setSearch] = useState();
-    const [text, setText] = useState("");
 
     const dispatch = useDispatch();
-    const loading = useSelector(
-      (state) => state.bagReducer.isLoading
-    );
-    const user=useSelector((state)=>state.userReducer.user)
-  {/*
-    const [availibiltyDate, setAvailibiltyDate]=  useState("availibiltyDate")
-    const [timerDays, setTimerDays] = useState('00');
-    const [timerHours, setTimerHours] = useState('00');
-    const [timerMinutes, setTimerMinutes] = useState('00');
-    const [timerSeconds, setTimerSeconds] = useState('00');
- 
-    let interval=useRef();
-    const startTimer=()=>{
-      const countdownDate= moment(bag.availibiltyDate).valueOf();
-      interval= setInterval(()=>{
-        const now= new Date().getTime();
-        const distance=countdownDate - now;
-        const days= Math.floor(distance /(1000 * 60 * 60 * 24));
-        const hours= Math.floor((distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)));
-        const minutes= Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds= Math.floor((distance %(1000 * 60 )) / 1000);
 
-      if (distance < 0){
-        //stop timer
-        clearInterval(interval.current)
-      }
-      else {
-        setTimerDays(days);
-        setTimerHours(hours);
-        setTimerMinutes(minutes);
-        setTimerSeconds(seconds);
-      }
-      },1000);
-      
-      
-    };
-    //component didmount
-    useEffect(() => {
-      startTimer();
-      
-      return () => {
-        clearInterval(interval.current);
-      };
-    });
-  */}
+  
     const calculateTimeLeft = () => {
       let eventTime = moment(bag.availibiltyDate).valueOf();
       let currentTime = (Math.floor(Date.now() / 1000)).valueOf();
@@ -110,15 +61,6 @@ const BagDetails = ({bag}) => {
     }
  // const bagtoshow = useSelector((state) => state.bagReducer.bags)
 
- const handleComment = (e) => {
-  e.preventDefault();
-
-  if (text) {
-    dispatch(addComment(bag._id, user._id, text, ))
-      .then(() => dispatch(getbags()))
-      .then(() => setText(''));
-  }
-};
 
 const handleChange = () => {
   if (bag.isReserved) {

@@ -1,19 +1,9 @@
-import { Switch } from '@mui/material'
 import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import { useHistory} from 'react-router-dom'
-import { logout } from '../../JS/actions/user'
-import { Route} from 'react-router'
-import { Link } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
-import Add from '../bags/addbag'
-import BagList from '../bags/Bag'
-import Navbar from '../Navbar'
-import Header from "../../Componenets/landing/header"
+import { useSelector} from 'react-redux'
+
  import './dash.css'
 const Dashboard = () => {
-    const dispatch = useDispatch()
-    const history=useHistory()
+  
     const user=useSelector(state=>state.userReducer.user)
   
     return (

@@ -1,13 +1,11 @@
-import { TextField } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import { Form, Input, TextArea, Button, Select } from "semantic-ui-react";
-import {  getbagId, getOnebag } from "../../JS/actions/bag";
-import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core/';
+import { useHistory } from "react-router-dom";
+import { Button } from "semantic-ui-react";
+import {   getOnebag } from "../../JS/actions/bag";
+import { Paper, Typography, Divider } from '@material-ui/core/';
 import moment from 'moment';
 import useStyles from '../styles';
-import ImageSlider from '../../pages/images'
 
 
 
@@ -16,7 +14,7 @@ import ImageSlider from '../../pages/images'
 const Ressearch = () => {
     const dispatch = useDispatch()
     const history=useHistory()
-    let {id}=useParams()
+    // eslint-disable-next-line no-unused-vars
     const [state, setState] = useState({
       namebag:"",
       price:"",
@@ -30,14 +28,14 @@ const Ressearch = () => {
     )
     
 
-    const {namebag,adresse,description,price,category,availibiltyDate,status,numProduct,expirationDate,createdAt}=state;
+    const {adresse}=state;
 
    const bag=useSelector((state)=>state.bagReducer.bags)
    const classes = useStyles();
 
 useEffect(() => {
 dispatch(getOnebag(adresse))    
-}, [])
+}, [adresse, dispatch])
 
 
    

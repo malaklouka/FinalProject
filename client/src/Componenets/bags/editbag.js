@@ -2,7 +2,7 @@ import { TextField } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { Form, Input, TextArea, Button, Select } from "semantic-ui-react";
+import { Form,  Button } from "semantic-ui-react";
 import { editBag, getbagId } from "../../JS/actions/bag";
 import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
@@ -30,14 +30,14 @@ const Editbag = () => {
     )
     
 
-    const {namebag,adresse,description,price,priceBefore,category,availibiltyDate,status,numProduct,expirationDate}=state;
+    const {namebag,adresse,description,price,priceBefore,category,availibiltyDate,numProduct,expirationDate}=state;
 
    const [error,setError]=useState("")
    const bag=useSelector((state)=>state.bagReducer.bags)
 
 useEffect(() => {
 dispatch(getbagId(id))    
-}, [])
+}, [dispatch, id])
 
 useEffect(()=>{
 if (bag){

@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Card, Image } from 'semantic-ui-react'
+import React  from 'react'
+import { Button } from 'semantic-ui-react'
 import { useDispatch, useSelector } from "react-redux"
-import { addBag, deletebag, editBag,getbags,likePost} from '../../JS/actions/bag'
+import {  deletebag} from '../../JS/actions/bag'
 import Flippy, { FrontSide, BackSide } from 'react-flippy'
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
-import { Link } from 'react-router-dom'
-import Add from './addbag'
-import { useHistory, useParams } from "react-router"
-import BasicAlerts from '../alert'
-import ImageSlider from '../../pages/images'
+
+import { useHistory,  } from "react-router"
+
 import moment from 'moment';
 import Loader from '../spinneer'
-import Navbar from '../Navbar'
-import { AiOutlineDelete,AiOutlineEdit,AiOutlineLike,AiTwotoneHeart,AiOutlineHeart,AiOutlineQrcode } from "react-icons/ai";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { AiOutlineDelete,AiOutlineEdit,AiTwotoneHeart,AiOutlineQrcode } from "react-icons/ai";
 import './bags.css'
 import Carousel from 'react-material-ui-carousel';
 import CarouselSlide from 'react-material-ui-carousel';
@@ -23,15 +18,12 @@ const OneBag = ({bag}) => {
   
     const dispatch = useDispatch()
     const history= useHistory()
-   {/*  useEffect(() => {
-      dispatch(getbags())
-         }, [])*/}
+ 
 
          const loading = useSelector(
           (state) => state.bagReducer.isLoading
         );
 
-        const bags=useSelector((state)=>state.bagReducer.bags)
     const handleDelete=(id)=>{
       if (window.confirm("Are you sure wanted to delete this bag? "))
       dispatch(deletebag(id))

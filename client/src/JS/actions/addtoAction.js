@@ -1,11 +1,7 @@
 import * as addto from "../const/addto"
 import axios from "axios"
 export const addToDemand = (id_customer, quantity) => async (dispatch, getState) => {
-    const config = {
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-      };
+  
     try {
       const data = await axios.post(`/dmnd/${id_customer}`)
   
@@ -34,11 +30,7 @@ export const addToDemand = (id_customer, quantity) => async (dispatch, getState)
 
   
 export const removeItemFromDemand = (id) => async (dispatch, getState) => {
-    const config = {
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-      };
+
     dispatch({
       type: addto.DEMAND_REMOVE_ITEM,
       payload: id,

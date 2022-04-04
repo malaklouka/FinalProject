@@ -2,8 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import LibraryAddCheckOutlinedIcon from "@mui/icons-material/LibraryAddCheckOutlined";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
+
 import BlockIcon from "@mui/icons-material/Block";
 import DeleteOutlineOutlined from "@mui/icons-material/DeleteOutlineOutlined";
 
@@ -32,10 +31,10 @@ const Store = ({ store }) => {
   };
   return (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3 m-3">
-      {userr && userr.role == "admin" ? (
+      {userr && userr.role === "admin" ? (
         <div className="our-team">
           <div className="m-b-25">
-                      {store && store.gender == "female" ? (
+                      {store && store.gender === "female" ? (
                         <img
                           width="20%"
                           src="https://cdn1.iconfinder.com/data/icons/avatar-11/76/5-512.png"
@@ -67,7 +66,7 @@ const Store = ({ store }) => {
         <Link to={`/profile/${store._id}`}>
           <div className="our-team">
           <div className="m-b-25">
-                      {store && store.gender == "female" ? (
+                      {store && store.gender === "female" ? (
                         <img
                           width="20%"
                           src="https://cdn1.iconfinder.com/data/icons/avatar-11/76/5-512.png"

@@ -1,8 +1,7 @@
-import React,{ useState} from 'react';
+import React from 'react';
 import {
   Nav,
   NavLink,
-  Bars,
   NavMenu,
   NavBtn,
   NavBtnLink,
@@ -24,7 +23,6 @@ const Header = () => {
   const user = useSelector(state => state.userReducer.user);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [isDarkMode, setIsDarkMode] = useState(() => false);
 
   return (
     <>

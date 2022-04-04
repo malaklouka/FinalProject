@@ -1,10 +1,6 @@
-import React, { useState } from 'react'
-import { Button, Card, Image } from 'semantic-ui-react'
+import React from 'react'
+import { Button } from 'semantic-ui-react'
 import { useDispatch, useSelector } from "react-redux"
-
-import { useHistory } from 'react-router-dom'
-import Loader from '../spinneer'
-import moment from 'moment';
 import { acceptDemande, deleteDemande } from '../../JS/actions/demandes'
 import { Row, Col, ListGroup } from 'react-bootstrap';
 
@@ -16,7 +12,6 @@ const Dlist = ({dem}) => {
     const dispatch = useDispatch()
      
 
- const history=useHistory();
  const demandAcc=useSelector(state=>state.demandeReducer.demandes)
 
 

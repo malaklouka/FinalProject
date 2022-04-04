@@ -15,18 +15,18 @@ const CustList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user && user.role == "admin") {
+    if (user && user.role === "admin") {
       dispatch(getAllCust());
     }
   }, [dispatch, user]);
 
-  return user && user.role == "admin" ? (
+  return user && user.role === "admin" ? (
     <div>
       {loadUser ? (
         <CircularProgress />
       ) : errors ? (
         <h2>errors to fetch user</h2>
-      ) : cust && cust.length == 0 ? null : (
+      ) : cust && cust.length === 0 ? null : (
         <div>
           <h2 className="title-chefProject">Client List</h2>{" "}
           <div className="listChef">

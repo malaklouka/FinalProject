@@ -1,8 +1,7 @@
 import { Button } from '@mui/material'
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import PaymentView from '../../views/PaymentView'
 import moment from 'moment';
 import { deleteDemande } from '../../JS/actions/demandes'
 import { AiOutlineDelete } from "react-icons/ai";
@@ -13,7 +12,6 @@ const Mesdmd = ({bagd}) => {
     const history=useHistory();
     const dispatch = useDispatch()
 
-    const bagdm=useSelector(state=>state.demandeReducer.demandes)
     const handleDelete=()=>{
         if (window.confirm("Are you sure wanted to delete this demande? "))
         dispatch(deleteDemande(bagd._id))

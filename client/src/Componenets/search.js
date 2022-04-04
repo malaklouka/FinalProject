@@ -1,38 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { getbags, getOnebag } from "../JS/actions/bag";
-import { useHistory, useLocation } from "react-router-dom";
-import BagDetails from '../Componenets/custbag/bagDetails';
-import { Row, Col } from 'react-bootstrap';
-import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core/';
-import moment from 'moment';
-import { Icon, Card } from 'antd';
-import OneBag from "./bags/Bag";
-import {FaMapMarkerAlt} from "react-icons/fa"
+import { useHistory } from "react-router-dom";
 
 
 
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
 
 const Search = () => {
  
 
-  const query = useQuery();
 
-  const searchQuery = query.get("searchQuery");
-  const searchedbags = useSelector((state) => state.bagReducer.bags);
-const isLoading=useSelector((state)=>state.bagReducer.isLoading)
+
   const dispatch = useDispatch();
   
   const [adresse, setAdresse] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   useEffect(() => {
     dispatch(getbags())
 
-  }, []);
+  }, [dispatch]);
   const history = useHistory();
 
 
@@ -49,10 +35,7 @@ const isLoading=useSelector((state)=>state.bagReducer.isLoading)
     e.preventDefault();
     searchBag();
 
-    //the enterkey
-  { /* if (e.keyCode === 13) {
-      searchBag();
-    }*/}
+
   };
  
 

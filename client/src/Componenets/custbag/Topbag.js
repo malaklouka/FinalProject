@@ -1,18 +1,13 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import Loader from '../spinneer'
 import Message from './Message'
 import { topbag } from '../../JS/actions/bag'
 import './top.css'
 import CarouselSlide from 'react-material-ui-carousel';
-import moment from 'moment';
-import Flippy, { FrontSide, BackSide } from 'react-flippy'
 import Carousel from 'react-material-ui-carousel'
 import { Typography } from '@material-ui/core';
-import { getTypographyUtilityClass } from '@mui/material';
-import { useHistory, useParams } from 'react-router';
-import { Divider } from 'semantic-ui-react';
+import { useHistory } from 'react-router';
 import useStyles from '../styles';
 import { FaMapMarkerAlt } from 'react-icons/fa'
 
@@ -20,9 +15,7 @@ const Topbags = ({bagtop}) => {
   const dispatch = useDispatch()
   const history = useHistory();
     const classes = useStyles();
-    let {id}=useParams()
 
-  const bagTop = useSelector((state) => state.topReducer.topbags)
   const isloading= useSelector((state) => state.topReducer.isloading)
   const error= useSelector((state) => state.topReducer.error)
 
@@ -30,7 +23,6 @@ const Topbags = ({bagtop}) => {
   useEffect(() => {
     dispatch(topbag())
   }, [dispatch])
-  const openPost = (id) => history.push(`/bagdetail/${id}`);
 
   return isloading ? (
     <Loader/>

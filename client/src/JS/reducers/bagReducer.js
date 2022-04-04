@@ -1,5 +1,5 @@
 import {LOAD_BAGS,GET_BAGS_SUCCESS,GET_BAGS_FAIL,
-    DELETE_BAG,EDIT_BAG, IS_RESERVED,LIKE} from "../const/bag"
+     IS_RESERVED,LIKE} from "../const/bag"
   
     const initialState={
     bags:[],

@@ -1,16 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 import "./main.css";
 import hello from "../assets/hello.svg";
 import  PieChartScreen from "../charts/Chart";
 
-import { useEffect } from 'react';
-import { getNBcust } from '../../../JS/actions/adminAction';
-
 const Main = () => {
     const user = useSelector(state => state.userReducer.user);
-    const numcust=useSelector(state => state.userReducer.custs)
-    const dispatch = useDispatch()
+
 
   return (
     <main>

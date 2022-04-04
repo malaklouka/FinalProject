@@ -6,10 +6,9 @@ import OneBag from './Bag'
 import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import { Route, Switch } from 'react-router';
-import { useHistory, useLocation } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 
 import './bags.css'
-import Navbar from '../Navbar'
 import Loader from '../spinneer'
 import { Paper } from '@material-ui/core'
 import Paginate from '../Pagination'
@@ -33,7 +32,7 @@ const BagList = () => {
     const dispatch =useDispatch();
     useEffect(() => {
         dispatch(getbags())
-    }, [])
+    }, [dispatch])
   
     return (
         <div>

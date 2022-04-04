@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import {  useSelector } from 'react-redux';
 import CheckoutSteps from '../Componenets/CheckoutSteps';
-import { createOrder } from '../JS/actions/orderAction';
 import Message from '../Componenets/custbag/Message';
 
 
 
-const PlaceOrderView = ({ history }) => {
-  const dispatch = useDispatch();
+const PlaceOrderView = () => {
   const usr=useSelector(state=>state.userReducer.user)
   const dmnd=useSelector(state=>state.demandeReducer.demandes)
 

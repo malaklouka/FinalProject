@@ -1,14 +1,10 @@
-import React, { useState } from 'react'
-import { Button, Card, Image } from 'semantic-ui-react'
-import { useDispatch, useSelector } from "react-redux"
-
-import { useHistory } from 'react-router-dom'
-import Loader from '../spinneer'
+import React from 'react'
+import { Button } from 'semantic-ui-react'
+import { useDispatch } from "react-redux"
 import moment from 'moment';
 import { acceptDemande, deleteDemande } from '../../JS/actions/demandes'
-import { Row, Col, ListGroup } from 'react-bootstrap';
-import { AiOutlineDelete,AiOutlineEdit,AiOutlineLike,AiTwotoneHeart,AiOutlineHeart,AiOutlineQrcode } from "react-icons/ai";
-
+import { Row, Col } from 'react-bootstrap';
+import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -17,7 +13,6 @@ const Dmd = ({bagd}) => {
     const dispatch = useDispatch()
      
 
-    const history=useHistory();
    
    
    const handleDelete=()=>{

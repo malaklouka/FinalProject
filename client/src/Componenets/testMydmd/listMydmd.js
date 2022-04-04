@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { getMydmnd } from '../../JS/actions/demandes'
 import Mesdmd from './mesdmd'
-import { Row, Col, ListGroup } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 
 
 
@@ -13,7 +13,7 @@ const MyList = () => {
     
     useEffect(() => {
         dispatch(getMydmnd())
-    }, [])
+    }, [dispatch])
     return (
         <div>
       <div className="container" style={{display:"flex"}}>            <ListGroup.Item>

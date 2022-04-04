@@ -1,15 +1,12 @@
-import { TextField } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import { Form, Input, TextArea, Button, Select } from "semantic-ui-react";
-import {  getbagId } from "../../JS/actions/bag";
-import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core/';
-import moment from 'moment';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+
+import {  Divider } from '@material-ui/core/';
+
 import "./styless.css"
 import useStyles from '../styles';
 const Recommended = ({bag}) => {
-    const [state, setState] = useState({
+    const [state] = useState({
         bags:[]
          }
        )

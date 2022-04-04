@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllstorek } from "../../JS/actions/user";
 import CustList from "../custList/CustList"
-import Chef from "./Chef";
 import "./ChefsList.css";
 
 const StorekList= () => {
@@ -17,7 +16,7 @@ const StorekList= () => {
     
       dispatch(getAllstorek());
     
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   return (
     <div>

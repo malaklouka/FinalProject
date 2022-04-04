@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {  editProfile, getUser } from "../../JS/actions/profilAction";
 import { TextField } from "@material-ui/core";
-import { Form, Input, TextArea, Button, Select } from "semantic-ui-react";
+import { Form,  Button } from "semantic-ui-react";
 import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,7 +17,7 @@ const EditProfile = () => {
       
   useEffect(() => {
     dispatch(getUser()); 
-  }, []);
+  }, [dispatch]);
 
 
   

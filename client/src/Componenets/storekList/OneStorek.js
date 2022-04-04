@@ -2,16 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import LibraryAddCheckOutlinedIcon from "@mui/icons-material/LibraryAddCheckOutlined";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import BlockIcon from "@mui/icons-material/Block";
 import DeleteOutlineOutlined from "@mui/icons-material/DeleteOutlineOutlined";
 
 import {
   deleteUser,
-  getChef,
+
   updateBannedUser,
-  updateChefStatus,
+ 
 } from "../../JS/actions/user";
 
 const OneStorek = ({ storek }) => {
@@ -35,7 +33,7 @@ const OneStorek = ({ storek }) => {
   // ------------------------------------------
   return (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3 m-3">
-      {user && user.role == "admin" ? (
+      {user && user.role === "admin" ? (
         <div className="our-team">
           <div className="picture">
             <img

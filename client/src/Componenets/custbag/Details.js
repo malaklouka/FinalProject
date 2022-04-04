@@ -1,9 +1,8 @@
-import axios from 'axios'
 import React, { useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getbagId } from '../../JS/actions/bag'
-import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core/';
+import { Typography, Divider } from '@material-ui/core/';
 
 import useStyles from '../styles';
 
@@ -11,14 +10,13 @@ const Details = () => {
     const Bags = useSelector(state => state.bagReducer.bags)
 
   const dispatch = useDispatch();
-  const history = useHistory();
   const { id } = useParams();
   const classes = useStyles();
 
 
   useEffect(() => {
     dispatch(getbagId(id));
-  }, [id]);
+  }, [dispatch, id]);
     return (
         <div>
           <div className={classes.card}>

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import CheckoutSteps from '../Componenets/CheckoutSteps';
+import { useDispatch } from 'react-redux';
 import FormContainer from '../Componenets/FormContainer';
 
 
 import { savePaymentMethod } from '../JS/actions/cartAction';
 
 const PaymentView = ({ history }) => {
-  const cart = useSelector((state) => state.cart);
  
 
   const [paymentMethod, setPaymentMethod] = useState('PayPal');
@@ -27,8 +25,7 @@ const PaymentView = ({ history }) => {
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="address">
           <Form.Group>
-{/*            <Form.Label as="legend">Select Method</Form.Label>
-*/}            <Col>
+         <Col>
               <Form.Check
                 type="radio"
                 label="Paypal or Credit Card"
@@ -39,15 +36,7 @@ const PaymentView = ({ history }) => {
                 checked
               ></Form.Check>
 
-              {/* <Form.Check
-                type="radio"
-                label="Stripe"
-                id="Stripe"
-                name="paymentMethod"
-                value="stripe"
-                onChange={(e) => setPaymentMethod(e.target.value)}
-                checked
-              ></Form.Check> */}
+        
             </Col>
           </Form.Group>
         </Form.Group>

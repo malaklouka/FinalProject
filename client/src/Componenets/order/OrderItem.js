@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { Button } from "semantic-ui-react";
 import { getMyorders } from "../../JS/actions/order";

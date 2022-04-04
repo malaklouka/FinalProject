@@ -9,9 +9,7 @@ const Dashboard= () => {
   const openSidebar = () => {
     setsidebarOpen(true);
   };
-  const closeSidebar = () => {
-    setsidebarOpen(false);
-  };
+
   return (
     <div className="container">
       <Navbar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />
